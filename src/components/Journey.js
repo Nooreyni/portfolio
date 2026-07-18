@@ -28,7 +28,7 @@ function Journey() {
   return (
     <section className="section" id="parcours">
       <div className="section-inner">
-        <p className="section-eyebrow">Parcours</p>
+        <p className="section-eyebrow">03 / Parcours</p>
         <h2 className="section-title">Je ne viens pas de l'école d'ingénieur classique</h2>
         <p className="section-lead">
           Et c'est exactement ce qui fait la différence : j'ai appris à apprendre vite,

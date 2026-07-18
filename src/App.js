@@ -7,12 +7,14 @@ import CaseStudies from './components/CaseStudies';
 import Journey from './components/Journey';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import OrchestrationLine from './components/OrchestrationLine';
 
 function App() {
   useReveal();
 
   return (
     <div className="App">
+      <OrchestrationLine />
       <Header />
       <main>
         <Hero />

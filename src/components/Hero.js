@@ -9,7 +9,7 @@ function Hero() {
         <h1 className="hero-title">
           Une infrastructure de grande entreprise.
           <br />
-          Un budget de <span className="hero-title-accent">PME</span>.
+          Un budget de <span className="hero-title-accent">pme</span>.
         </h1>
         <p className="hero-subtitle">
           Architecte IT &amp; orchestrateur IA freelance basé à Bruxelles. Je pilote

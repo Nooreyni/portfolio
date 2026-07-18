@@ -3,7 +3,7 @@ function Header() {
     <header className="header">
       <div className="header-inner">
         <a href="#top" className="header-logo">
-          Nooreyni
+          nooreyni_
         </a>
         <nav className="header-nav" aria-label="Navigation principale">
           <a href="#services">Services</a>
