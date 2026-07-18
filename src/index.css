@@ -3,6 +3,7 @@
   --color-on-primary: #FFFFFF;
   --color-secondary: #334155;
   --color-accent: #0369A1;
+  --color-accent-warm: #0D9488;
   --color-background: #F8FAFC;
   --color-surface: #FFFFFF;
   --color-foreground: #020617;
@@ -10,9 +11,11 @@
   --color-muted-bg: #E8ECF1;
   --color-border: #E2E8F0;
   --color-destructive: #DC2626;
+  --gradient-soft: linear-gradient(135deg, #E0F2FE 0%, #F8FAFC 45%, #CCFBF1 100%);
 
-  --font-heading: 'Lexend', sans-serif;
-  --font-body: 'Source Sans 3', sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'Space Grotesk', monospace;
 
   --space-1: 8px;
   --space-2: 16px;
@@ -23,6 +26,7 @@
   --space-7: 96px;
 
   --radius: 8px;
+  --radius-lg: 20px;
   --max-width: 1120px;
 }
 

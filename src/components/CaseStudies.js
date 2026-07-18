@@ -7,6 +7,7 @@ const cases = [
     description:
       "Portail de calculateurs administratifs belges (salaire net, TVA, crédit, véhicule...) — conçu, développé et optimisé SEO de bout en bout pour générer du trafic organique.",
     href: "https://outilsbelges.be",
+    flagship: true,
   },
   {
     tag: "Produit — validé en conditions réelles",
@@ -30,9 +31,12 @@ function CaseStudies() {
       <div className="section-inner">
         <p className="section-eyebrow">Preuves, pas promesses</p>
         <h2 className="section-title">Réalisations</h2>
-        <div className="cases-grid">
+        <div className="cases-grid reveal-group">
           {cases.map((item) => (
-            <article className="case-card" key={item.title}>
+            <article
+              className={`case-card reveal${item.flagship ? " case-card-flagship" : ""}`}
+              key={item.title}
+            >
               <p className="case-card-tag">{item.tag}</p>
               <h3 className="case-card-title">{item.title}</h3>
               <p className="case-card-description">{item.description}</p>

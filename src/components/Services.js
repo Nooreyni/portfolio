@@ -7,6 +7,7 @@ const services = [
     title: "Assistant IA WhatsApp pour PME",
     description:
       "Un bot qui répond aux questions, prend les commandes et gère les rendez-vous directement sur WhatsApp — en français, néerlandais et anglais. Conçu et testé en conditions réelles, pas un prototype.",
+    flagship: true,
   },
   {
     icon: ShieldCheck,
@@ -30,13 +31,16 @@ function Services() {
       <div className="section-inner">
         <p className="section-eyebrow">Ce que je propose</p>
         <h2 className="section-title">Des services concrets, pas une liste de compétences</h2>
-        <div className="services-grid">
+        <div className="services-grid reveal-group">
           {services.map((service) => {
             const Icon = service.icon;
             return (
-              <div className="service-card" key={service.title}>
+              <div
+                className={`service-card reveal${service.flagship ? " service-card-flagship" : ""}`}
+                key={service.title}
+              >
                 <div className="service-card-icon">
-                  <Icon size={24} weight="regular" />
+                  <Icon size={service.flagship ? 30 : 24} weight="regular" />
                 </div>
                 <p className="service-card-tag">{service.tag}</p>
                 <h3 className="service-card-title">{service.title}</h3>

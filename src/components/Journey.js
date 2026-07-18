@@ -35,9 +35,9 @@ function Journey() {
           à m'adapter à un nouveau domaine, et à diriger l'IA comme un outil plutôt que
           d'en dépendre.
         </p>
-        <ol className="journey-timeline">
+        <ol className="journey-timeline reveal-group">
           {steps.map((step) => (
-            <li className="journey-step" key={step.title}>
+            <li className="journey-step reveal" key={step.title}>
               <p className="journey-period">{step.period}</p>
               <h3 className="journey-title">{step.title}</h3>
               <p className="journey-description">{step.description}</p>
