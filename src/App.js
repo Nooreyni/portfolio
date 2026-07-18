@@ -1,5 +1,4 @@
 import './App.css';
-import useReveal from './hooks/useReveal';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -10,8 +9,6 @@ import Footer from './components/Footer';
 import OrchestrationLine from './components/OrchestrationLine';
 
 function App() {
-  useReveal();
-
   return (
     <div className="App">
       <OrchestrationLine />

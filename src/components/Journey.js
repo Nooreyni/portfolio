@@ -1,3 +1,6 @@
+import { motion } from "framer-motion";
+import { staggerContainer, staggerItem, viewportOnce } from "../motion";
+
 const steps = [
   {
     period: "Dakar",
@@ -35,15 +38,21 @@ function Journey() {
           à m'adapter à un nouveau domaine, et à diriger l'IA comme un outil plutôt que
           d'en dépendre.
         </p>
-        <ol className="journey-timeline reveal-group">
+        <motion.ol
+          className="journey-timeline"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+        >
           {steps.map((step) => (
-            <li className="journey-step reveal" key={step.title}>
+            <motion.li className="journey-step" key={step.title} variants={staggerItem}>
               <p className="journey-period">{step.period}</p>
               <h3 className="journey-title">{step.title}</h3>
               <p className="journey-description">{step.description}</p>
-            </li>
+            </motion.li>
           ))}
-        </ol>
+        </motion.ol>
       </div>
     </section>
   );

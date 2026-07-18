@@ -1,4 +1,9 @@
 import { ArrowUpRight } from "@phosphor-icons/react";
+import WhatsAppMockup from "./WhatsAppMockup";
+import CaseVignetteOutils from "./CaseVignetteOutils";
+import CaseVignetteKelbail from "./CaseVignetteKelbail";
+import CaseVignetteYobantel from "./CaseVignetteYobantel";
+import CaseCard from "./CaseCard";
 
 const cases = [
   {
@@ -8,7 +13,7 @@ const cases = [
     description:
       "Portail de calculateurs administratifs belges (salaire net, TVA, crédit, véhicule...) — conçu, développé et optimisé SEO de bout en bout pour générer du trafic organique.",
     href: "https://outilsbelges.be",
-    frameColor: "amber",
+    vignette: CaseVignetteOutils,
     flagship: true,
   },
   {
@@ -18,16 +23,23 @@ const cases = [
     description:
       "Bot de prise de commande et service client pour petits commerces, multi-langue (FR/NL/EN) — testé de bout en bout : réception du message, réponse IA, confirmation de commande.",
     href: null,
-    frameColor: "green",
+    mockup: true,
   },
   {
     index: "03",
-    tag: "missions clients",
-    title: "Kelbail.com & Yobantel.com",
-    description:
-      "Sites web livrés pour des tiers, de la conception à la mise en ligne.",
+    tag: "mission cliente",
+    title: "Kelbail.com",
+    description: "Marketplace de sous-locations entre particuliers en Belgique, de la conception à la mise en ligne.",
     href: "https://kelbail.com",
-    frameColor: "blue",
+    vignette: CaseVignetteKelbail,
+  },
+  {
+    index: "04",
+    tag: "mission cliente",
+    title: "Yobantel.com",
+    description: "Plateforme logistique diaspora ↔ Sénégal — étude fonctionnelle et conception.",
+    href: "https://yobantel.com",
+    vignette: CaseVignetteYobantel,
   },
 ];
 
@@ -37,34 +49,38 @@ function CaseStudies() {
       <div className="section-inner">
         <p className="section-eyebrow">02 / Preuves, pas promesses</p>
         <h2 className="section-title">Réalisations</h2>
-        <div className="cases-grid reveal-group">
-          {cases.map((item) => (
-            <article
-              className={`case-card reveal${item.flagship ? " case-card-flagship" : ""}`}
-              key={item.title}
-            >
-              <div className={`case-card-frame case-card-frame-${item.frameColor}`}>
-                <span className="case-card-frame-dot" />
-                <span className="case-card-frame-dot" />
-                <span className="case-card-frame-dot" />
-              </div>
-              <p className="case-card-index">{item.index}</p>
-              <p className="case-card-tag">{item.tag}</p>
-              <h3 className="case-card-title">{item.title}</h3>
-              <p className="case-card-description">{item.description}</p>
-              {item.href && (
-                <a
-                  className="case-card-link"
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Voir le site
-                  <ArrowUpRight size={16} weight="bold" />
-                </a>
-              )}
-            </article>
-          ))}
+        <div className="cases-grid">
+          {cases.map((item) => {
+            const Vignette = item.vignette;
+            return (
+              <CaseCard
+                className={`case-card${item.flagship ? " case-card-flagship" : ""}`}
+                key={item.title}
+              >
+                {Vignette && <Vignette />}
+                {item.mockup && (
+                  <div className="vignette vignette-mockup">
+                    <WhatsAppMockup />
+                  </div>
+                )}
+                <p className="case-card-index">{item.index}</p>
+                <p className="case-card-tag">{item.tag}</p>
+                <h3 className="case-card-title">{item.title}</h3>
+                <p className="case-card-description">{item.description}</p>
+                {item.href && (
+                  <a
+                    className="case-card-link"
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Voir le site
+                    <ArrowUpRight size={16} weight="bold" />
+                  </a>
+                )}
+              </CaseCard>
+            );
+          })}
         </div>
         <p className="credibility-line">
           Actuellement IT Manager pour une structure de 350 utilisateurs à Bruxelles —

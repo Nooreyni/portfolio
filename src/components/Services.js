@@ -1,4 +1,6 @@
+import { motion } from "framer-motion";
 import { WhatsappLogo, ShieldCheck, Code } from "@phosphor-icons/react";
+import { staggerContainer, staggerItem, viewportOnce } from "../motion";
 
 const services = [
   {
@@ -34,13 +36,22 @@ function Services() {
       <div className="section-inner">
         <p className="section-eyebrow">01 / Ce que je propose</p>
         <h2 className="section-title">Des services concrets, pas une liste de compétences</h2>
-        <div className="services-list reveal-group">
+        <motion.div
+          className="services-list"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+        >
           {services.map((service) => {
             const Icon = service.icon;
             return (
-              <div
-                className={`service-row reveal${service.flagship ? " service-row-flagship" : ""}`}
+              <motion.div
+                className={`service-row${service.flagship ? " service-row-flagship" : ""}`}
                 key={service.title}
+                variants={staggerItem}
+                whileHover={{ x: 4 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
               >
                 <p className="service-row-index">{service.index}</p>
                 <div className="service-row-body">
@@ -51,10 +62,10 @@ function Services() {
                   <p className="service-row-description">{service.description}</p>
                 </div>
                 <p className="service-row-status">{service.status}</p>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
