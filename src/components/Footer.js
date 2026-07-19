@@ -1,10 +1,8 @@
-function Footer() {
+function Footer({ t }) {
   return (
     <footer className="footer">
-      <div className="footer-inner">
-        <p>© {new Date().getFullYear()} Ousmane Diop — Nooreyni</p>
-        <p>Bruxelles, Belgique</p>
-      </div>
+      <div>OUSMANE DIOP — {t.footer.tag}</div>
+      <div>© {new Date().getFullYear()}</div>
     </footer>
   );
 }

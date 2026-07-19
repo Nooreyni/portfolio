@@ -1,29 +1,52 @@
-import { EnvelopeSimple, LinkedinLogo } from "@phosphor-icons/react";
+import { useState } from "react";
+import Appear from "./Appear";
 
-function Contact() {
+// No backend on this static site — the "form" composes a real mailto so the
+// message actually reaches an inbox, instead of silently vanishing.
+function Contact({ t }) {
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
+  const [sent, setSent] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const subject = encodeURIComponent(`Contact — ${name || "site"}`);
+    const body = encodeURIComponent(`${message}\n\n— ${name}`);
+    window.location.href = `mailto:${t.contact.email}?subject=${subject}&body=${body}`;
+    setSent(true);
+  }
+
   return (
-    <section className="section section-alt" id="contact">
-      <div className="section-inner section-inner-narrow">
-        <p className="section-eyebrow">04 / Contact</p>
-        <h2 className="section-title">Un projet, une question, une mission à discuter ?</h2>
-        <p className="section-lead">
-          Je réponds personnellement, sous 24h ouvrées.
-        </p>
-        <div className="contact-links">
-          <a className="button button-primary" href="mailto:nooreyni35@gmail.com">
-            <EnvelopeSimple size={18} weight="bold" />
-            nooreyni35@gmail.com
-          </a>
-          <a
-            className="button button-ghost"
-            href="https://www.linkedin.com/in/nooreyni"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <LinkedinLogo size={18} weight="bold" />
-            LinkedIn
-          </a>
-        </div>
+    <section className="contact" id="contact">
+      <div className="contact-inner">
+        <Appear as="p" className="contact-line">{t.contact.line}</Appear>
+
+        {!sent ? (
+          <form className="contact-form" onSubmit={handleSubmit}>
+            <input
+              className="contact-input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder={t.contact.namePh}
+              required
+            />
+            <textarea
+              className="contact-input"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder={t.contact.messagePh}
+              rows={4}
+              required
+            />
+            <button type="submit" className="contact-submit" data-hot="1">
+              {t.contact.submit}
+            </button>
+          </form>
+        ) : (
+          <p className="contact-thanks">{t.contact.thanks}</p>
+        )}
+
+        <a href={`mailto:${t.contact.email}`} className="contact-email">{t.contact.email}</a>
       </div>
     </section>
   );

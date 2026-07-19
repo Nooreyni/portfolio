@@ -1,83 +1,39 @@
-import { useRef, Suspense, lazy } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight } from "@phosphor-icons/react";
-import SplitText from "./SplitText";
+import { useEffect, useState } from "react";
+import NodeNetwork from "./NodeNetwork";
 
-const OrchestrationScene = lazy(() => import("./OrchestrationScene"));
+function Hero({ t }) {
+  const [parallax, setParallax] = useState(0);
 
-function Hero() {
-  const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-  const meshY = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, 60]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.4]);
+  useEffect(() => {
+    let raf = null;
+    function update() {
+      setParallax(Math.min(60, window.scrollY * 0.1));
+      raf = null;
+    }
+    function onScroll() {
+      if (!raf) raf = requestAnimationFrame(update);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
 
   return (
-    <section className="hero" id="top" ref={sectionRef}>
-      <motion.div className="hero-mesh" style={{ y: meshY }} aria-hidden="true" />
-      <motion.div className="hero-scene-wrap" style={{ y: meshY }}>
-        <Suspense fallback={null}>
-          <OrchestrationScene />
-        </Suspense>
-      </motion.div>
-      <motion.div className="hero-inner" style={{ y: contentY, opacity: contentOpacity }}>
-        <motion.p
-          className="hero-badge"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          orchestrateur_IT × IA
-        </motion.p>
+    <section className="hero" id="top">
+      <div className="hero-network">
+        <NodeNetwork parallax={parallax} />
+      </div>
+      <div className="hero-content">
+        <p className="hero-label">{t.hero.label}</p>
         <h1 className="hero-title">
-          <span className="hero-title-line">
-            <SplitText text="Une infrastructure" delayStart={0.1} />
-          </span>
-          <span className="hero-title-line">
-            <SplitText text="de grande entreprise." delayStart={0.3} />
-          </span>
-          <span className="hero-title-line">
-            <SplitText text="Un budget de" delayStart={0.55} />{" "}
-            <motion.span
-              className="hero-title-accent"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.75, ease: "easeOut" }}
-            >
-              pme
-            </motion.span>
-            .
-          </span>
+          <span className="hero-line hero-line-1">{t.hero.line1}</span>
+          <span className="hero-line hero-line-2">{t.hero.line2}</span>
+          <span className="hero-line hero-line-3">{t.hero.line3}</span>
         </h1>
-        <motion.p
-          className="hero-subtitle"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.9 }}
-        >
-          Architecte IT &amp; orchestrateur IA freelance basé à Bruxelles. Je pilote
-          gouvernance, sécurité et automatisation pour des PME et associations
-          belges — l'IA multiplie ce que je livre, elle ne remplace pas le
-          jugement qui décide quoi construire.
-        </motion.p>
-        <motion.div
-          className="hero-actions"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.05 }}
-        >
-          <a href="#contact" className="button button-primary">
-            Discutons de votre projet
-            <ArrowRight size={18} weight="bold" />
-          </a>
-          <a href="#realisations" className="button button-ghost">
-            Voir mes réalisations
-          </a>
-        </motion.div>
-      </motion.div>
+        <p className="hero-sub">{t.hero.sub}</p>
+      </div>
     </section>
   );
 }

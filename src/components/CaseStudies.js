@@ -1,91 +1,36 @@
-import { ArrowUpRight } from "@phosphor-icons/react";
-import WhatsAppMockup from "./WhatsAppMockup";
-import CaseVignetteOutils from "./CaseVignetteOutils";
-import CaseVignetteKelbail from "./CaseVignetteKelbail";
-import CaseVignetteYobantel from "./CaseVignetteYobantel";
-import CaseCard from "./CaseCard";
+import Appear from "./Appear";
 
-const cases = [
-  {
-    index: "01",
-    tag: "projet personnel — en production",
-    title: "outilsbelges.be",
-    description:
-      "Portail de calculateurs administratifs belges (salaire net, TVA, crédit, véhicule...) — conçu, développé et optimisé SEO de bout en bout pour générer du trafic organique.",
-    href: "https://outilsbelges.be",
-    vignette: CaseVignetteOutils,
-    flagship: true,
-  },
-  {
-    index: "02",
-    tag: "produit — validé en conditions réelles",
-    title: "Assistant IA WhatsApp",
-    description:
-      "Bot de prise de commande et service client pour petits commerces, multi-langue (FR/NL/EN) — testé de bout en bout : réception du message, réponse IA, confirmation de commande.",
-    href: null,
-    mockup: true,
-  },
-  {
-    index: "03",
-    tag: "mission cliente",
-    title: "Kelbail.com",
-    description: "Marketplace de sous-locations entre particuliers en Belgique, de la conception à la mise en ligne.",
-    href: "https://kelbail.com",
-    vignette: CaseVignetteKelbail,
-  },
-  {
-    index: "04",
-    tag: "mission cliente",
-    title: "Yobantel.com",
-    description: "Plateforme logistique diaspora ↔ Sénégal — étude fonctionnelle et conception.",
-    href: "https://yobantel.com",
-    vignette: CaseVignetteYobantel,
-  },
-];
-
-function CaseStudies() {
+function CaseStudies({ t }) {
   return (
-    <section className="section section-alt" id="realisations">
-      <div className="section-inner">
-        <p className="section-eyebrow">02 / Preuves, pas promesses</p>
-        <h2 className="section-title">Réalisations</h2>
-        <div className="cases-grid">
-          {cases.map((item) => {
-            const Vignette = item.vignette;
-            return (
-              <CaseCard
-                className={`case-card${item.flagship ? " case-card-flagship" : ""}`}
-                key={item.title}
-              >
-                {Vignette && <Vignette />}
-                {item.mockup && (
-                  <div className="vignette vignette-mockup">
-                    <WhatsAppMockup />
-                  </div>
-                )}
-                <p className="case-card-index">{item.index}</p>
-                <p className="case-card-tag">{item.tag}</p>
-                <h3 className="case-card-title">{item.title}</h3>
-                <p className="case-card-description">{item.description}</p>
-                {item.href && (
-                  <a
-                    className="case-card-link"
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Voir le site
-                    <ArrowUpRight size={16} weight="bold" />
-                  </a>
-                )}
-              </CaseCard>
-            );
-          })}
-        </div>
-        <p className="credibility-line">
-          Actuellement IT Manager pour une structure de 350 utilisateurs à Bruxelles —
-          gouvernance Microsoft 365, sécurité et infrastructure réseau au quotidien.
-        </p>
+    <section className="case-studies" id="projects">
+      <div className="case-studies-inner">
+        <p className="case-studies-label">{t.projectsLabel}</p>
+        {t.projects.map((p) => (
+          <Appear key={p.name} as="article" className="case-study">
+            <div className="case-study-head">
+              <h3 className="case-study-name">{p.name}</h3>
+              <span className="case-study-tag">{p.tag}</span>
+            </div>
+            <div className="case-study-grid">
+              <div>
+                <p className="case-study-field-label">{t.caseLabels.problem}</p>
+                <p className="case-study-field-value">{p.problem}</p>
+              </div>
+              <div>
+                <p className="case-study-field-label">{t.caseLabels.thinking}</p>
+                <p className="case-study-field-value">{p.thinking}</p>
+              </div>
+              <div>
+                <p className="case-study-field-label">{t.caseLabels.architecture}</p>
+                <p className="case-study-field-value">{p.architecture}</p>
+              </div>
+              <div>
+                <p className="case-study-field-label">{t.caseLabels.outcome}</p>
+                <p className="case-study-field-value case-study-outcome">{p.outcome}</p>
+              </div>
+            </div>
+          </Appear>
+        ))}
       </div>
     </section>
   );
