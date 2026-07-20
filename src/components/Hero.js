@@ -26,11 +26,17 @@ function Hero({ t }) {
         <NodeNetwork parallax={parallax} />
       </div>
       <div className="hero-content">
+        {t.hero.statusBadge && (
+          <div className="hero-status-badge">
+            <span className="hero-status-dot" />
+            <span className="hero-status-text">{t.hero.statusBadge}</span>
+          </div>
+        )}
         <p className="hero-label">{t.hero.label}</p>
         <h1 className="hero-title">
           <span className="hero-line hero-line-1">{t.hero.line1}</span>
           <span className="hero-line hero-line-2">{t.hero.line2}</span>
-          <span className="hero-line hero-line-3">{t.hero.line3}</span>
+          {t.hero.line3 && <span className="hero-line hero-line-3">{t.hero.line3}</span>}
         </h1>
         <p className="hero-sub">{t.hero.sub}</p>
       </div>

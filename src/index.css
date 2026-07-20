@@ -8,6 +8,13 @@
   --accent: oklch(50% 0.1 246);
   --accent-soft: oklch(50% 0.1 246 / 0.08);
   --accent-mid: oklch(50% 0.1 246 / 0.4);
+  --node-inactive: rgba(20, 20, 18, 0.6);
+
+  --nav-bg: rgba(241, 239, 233, 0.6);
+  --nav-border: rgba(20, 20, 18, 0.1);
+  --grid-line: rgba(20, 20, 18, 0.035);
+  --cursor-ring: rgba(20, 20, 18, 0.35);
+  --row-hover-bg: rgba(20, 20, 18, 0.035);
 
   --dark-bg: #141412;
   --dark-ink: #F1EFE9;
@@ -17,6 +24,25 @@
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --gutter: 8vw;
+}
+
+[data-theme="dark"] {
+  --bg: #0D0D0D;
+  --ink: #F8F8F6;
+  --ink-soft: rgba(248, 248, 246, 0.55);
+  --ink-faint: rgba(248, 248, 246, 0.35);
+  --line: rgba(248, 248, 246, 0.12);
+  --line-faint: rgba(248, 248, 246, 0.08);
+  --accent: oklch(72% 0.1 246);
+  --accent-soft: oklch(72% 0.1 246 / 0.08);
+  --accent-mid: oklch(72% 0.1 246 / 0.4);
+  --node-inactive: rgba(248, 248, 246, 0.6);
+
+  --nav-bg: rgba(13, 13, 13, 0.6);
+  --nav-border: rgba(248, 248, 246, 0.1);
+  --grid-line: rgba(248, 248, 246, 0.035);
+  --cursor-ring: rgba(248, 248, 246, 0.35);
+  --row-hover-bg: rgba(248, 248, 246, 0.035);
 }
 
 * {
@@ -42,6 +68,7 @@ body {
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.5s var(--ease), color 0.5s var(--ease);
 }
 
 h1, h2, h3, h4 {
