@@ -1,13 +1,15 @@
 import { useState } from "react";
 import Appear from "./Appear";
 
-function Contact({ t }) {
+function Contact({ t, lang }) {
   const [name, setName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [message, setMessage] = useState("");
   const [selectedPills, setSelectedPills] = useState([]);
   const [sent, setSent] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
+
+  const isEn = lang === "en";
 
   const togglePill = (label) => {
     setSelectedPills((prev) =>
@@ -25,10 +27,10 @@ function Contact({ t }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const categoriesText = selectedPills.length > 0 ? selectedPills.join(" | ") : "Général";
+    const categoriesText = selectedPills.length > 0 ? selectedPills.join(" | ") : (isEn ? "General" : "Général");
     const subject = encodeURIComponent(`[Contact Portfolio] ${categoriesText} — ${name}`);
     const body = encodeURIComponent(
-      `Nom / Entreprise : ${name}\nEmail : ${userEmail}\n\nDomaines sélectionnés :\n${categoriesText}\n\nMessage :\n${message}`
+      `${isEn ? "Name / Company" : "Nom / Entreprise"} : ${name}\nEmail : ${userEmail}\n\n${isEn ? "Selected Scope" : "Domaines sélectionnés"} :\n${categoriesText}\n\nMessage :\n${message}`
     );
     window.location.href = `mailto:${t.contact.email}?subject=${subject}&body=${body}`;
     setSent(true);
@@ -72,16 +74,16 @@ function Contact({ t }) {
 
             <div className="contact-email-card">
               <div className="contact-email-meta">
-                <span className="contact-email-label">EMAIL DIRECT</span>
+                <span className="contact-email-label">{isEn ? "DIRECT EMAIL" : "EMAIL DIRECT"}</span>
                 <a href={`mailto:${t.contact.email}`} className="contact-email-link">{t.contact.email}</a>
               </div>
               <button 
                 type="button" 
                 onClick={handleCopyEmail} 
                 className="contact-copy-btn"
-                aria-label="Copier l'email"
+                aria-label={isEn ? "Copy email" : "Copier l'email"}
               >
-                {emailCopied ? "✓ Copié !" : "📋 Copier"}
+                {emailCopied ? (isEn ? "✓ Copied!" : "✓ Copié !") : (isEn ? "📋 Copy" : "📋 Copier")}
               </button>
             </div>
 
@@ -161,7 +163,7 @@ function Contact({ t }) {
                 <span className="contact-thanks-icon">✉️</span>
                 <p className="contact-thanks">{t.contact.thanks}</p>
                 <button type="button" onClick={() => setSent(false)} className="contact-reset-btn">
-                  Envoyer une autre demande
+                  {isEn ? "Send another request" : "Envoyer une autre demande"}
                 </button>
               </div>
             )}

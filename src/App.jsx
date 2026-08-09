@@ -50,10 +50,10 @@ function App() {
         <Expertise t={t} />
         <CaseStudies t={t} lang={lang} />
         <OtherWork t={t} />
-        <Contact t={t} />
+        <Contact t={t} lang={lang} />
       </main>
       <Footer t={t} />
-      <BackToTop />
+      <BackToTop lang={lang} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // Floating Back-to-Top Button
-function BackToTop() {
+function BackToTop({ lang }) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -28,10 +28,10 @@ function BackToTop() {
     <button
       className={`back-to-top-btn ${isVisible ? "is-visible" : ""}`}
       onClick={scrollToTop}
-      aria-label="Remonter en haut de page"
+      aria-label={lang === "en" ? "Scroll back to top" : "Remonter en haut de page"}
     >
       <span className="btt-arrow">↑</span>
-      <span className="btt-text">HAUT</span>
+      <span className="btt-text">{lang === "en" ? "TOP" : "HAUT"}</span>
     </button>
   );
 }

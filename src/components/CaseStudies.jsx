@@ -308,6 +308,7 @@ function DesktopHorizontal({ t, list, containerRef, isModalOpen, setIsModalOpen,
         onClose={() => setIsModalOpen(false)}
         t={t}
         studyKey={selectedStudy}
+        lang={lang}
       />
     </div>
   );

@@ -1,7 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function CaseStudyModal({ isOpen, onClose, t, studyKey }) {
+export default function CaseStudyModal({ isOpen, onClose, t, studyKey, lang }) {
   if (!isOpen) return null;
+
+  const isEn = lang === "en";
 
   // Dynamically resolve data based on the key
   let data = null;
@@ -31,13 +33,13 @@ export default function CaseStudyModal({ isOpen, onClose, t, studyKey }) {
           onClick={(e) => e.stopPropagation()}
         >
           {/* Close button */}
-          <button className="wa-modal-close" onClick={onClose}>
+          <button className="wa-modal-close" onClick={onClose} aria-label="Fermer">
             ✕
           </button>
 
           {/* Header */}
           <span className="wa-modal-tag">
-            {t.langLabel === "FR" ? "CASE STUDY / ANALYSIS" : "ÉTUDE DE CAS / ANALYSE"}
+            {isEn ? "CASE STUDY / ANALYSIS" : "ÉTUDE DE CAS / ANALYSE"}
           </span>
           <h3 className="wa-modal-title">{data.title}</h3>
           <p className="wa-modal-subtitle">{data.subtitle}</p>
@@ -47,7 +49,7 @@ export default function CaseStudyModal({ isOpen, onClose, t, studyKey }) {
           {/* Overview */}
           <div className="wa-modal-section">
             <h5 className="wa-section-title">
-              {t.langLabel === "FR" ? "OVERVIEW" : "PRÉSENTATION"}
+              {isEn ? "OVERVIEW" : "PRÉSENTATION"}
             </h5>
             <p className="wa-section-text">{data.overview}</p>
           </div>
@@ -56,7 +58,7 @@ export default function CaseStudyModal({ isOpen, onClose, t, studyKey }) {
           {data.architecture && (
             <div className="wa-modal-section">
               <h5 className="wa-section-title">
-                {t.langLabel === "FR" ? "SYSTEM COMPONENTS" : "COMPOSANTS DU SYSTÈME"}
+                {isEn ? "SYSTEM COMPONENTS" : "COMPOSANTS DU SYSTÈME"}
               </h5>
               <div className="wa-table-container">
                 <table className="wa-minimal-table">
@@ -78,7 +80,7 @@ export default function CaseStudyModal({ isOpen, onClose, t, studyKey }) {
           {data.steps && (
             <div className="wa-modal-section">
               <h5 className="wa-section-title">
-                {t.langLabel === "FR" ? "IMPLEMENTATION PROCESS" : "PROCESSUS DE DÉPLOIEMENT"}
+                {isEn ? "IMPLEMENTATION PROCESS" : "PROCESSUS DE DÉPLOIEMENT"}
               </h5>
               <div className="wa-minimal-steps">
                 {data.steps.map((step, idx) => (
@@ -98,15 +100,15 @@ export default function CaseStudyModal({ isOpen, onClose, t, studyKey }) {
           {data.packages && (
             <div className="wa-modal-section">
               <h5 className="wa-section-title">
-                {t.langLabel === "FR" ? "PRICING STRUCTURE" : "STRUCTURE TARIFAIRE"}
+                {isEn ? "PRICING STRUCTURE" : "STRUCTURE TARIFAIRE"}
               </h5>
               <div className="wa-table-container">
                 <table className="wa-minimal-table wa-pricing-table">
                   <thead>
                     <tr>
-                      <th>{t.langLabel === "FR" ? "PACKAGE" : "FORMULE"}</th>
-                      <th className="text-right">{t.langLabel === "FR" ? "SETUP" : "INSTALLATION"}</th>
-                      <th className="text-right">{t.langLabel === "FR" ? "MONTHLY" : "ABONNEMENT"}</th>
+                      <th>{isEn ? "PACKAGE" : "FORMULE"}</th>
+                      <th className="text-right">{isEn ? "SETUP" : "INSTALLATION"}</th>
+                      <th className="text-right">{isEn ? "MONTHLY" : "ABONNEMENT"}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -127,8 +129,8 @@ export default function CaseStudyModal({ isOpen, onClose, t, studyKey }) {
           <div className="wa-modal-footer">
             <a href="#contact" className="wa-modal-cta" onClick={onClose}>
               {studyKey === "whatsapp-ai"
-                ? (t.langLabel === "FR" ? "Order WhatsApp Bot Setup →" : "Commander l'assistant WhatsApp →")
-                : (t.langLabel === "FR" ? "Discuss this solution →" : "Échanger sur cette solution →")
+                ? (isEn ? "Order WhatsApp Bot Setup →" : "Commander l'assistant WhatsApp →")
+                : (isEn ? "Discuss this solution →" : "Échanger sur cette solution →")
               }
             </a>
           </div>

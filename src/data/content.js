@@ -17,7 +17,9 @@ const content = {
       line1: "Des systèmes",
       line2: "plus simples.",
       line3: "",
-      sub: "Systèmes numériques, automatisation et IA pour supprimer les frictions.",
+      sub: "Systèmes numériques, automatisation et IA pour supprimer les frictions opérationnelles.",
+      cta: "Échanger sur vos enjeux →",
+      scrollLink: "Examiner la démarche",
     },
     manifesto: {
       title: "Moins de friction.",
@@ -101,7 +103,7 @@ const content = {
         name: "Assistant IA WhatsApp",
         question: "Comment rendre l'interaction client sans friction ?",
         paragraph: "Les petites entreprises perdent des clients lorsqu'elles ne répondent pas instantanément. Un assistant IA doit gérer les rendez-vous et commandes naturellement, 24h/24.",
-        isFeatured: true, // Highlights this item
+        isFeatured: true,
         badgeText: "SOLUTION ACTIVE — DISPONIBLE IMMÉDIATEMENT",
         highlights: [
           "Prise de rendez-vous & FAQ",
@@ -198,7 +200,7 @@ const content = {
         { num: "03", title: "Migration Active", desc: "Bascule des boîtes mails et fichiers vers le cloud sans interruption de service." },
         { num: "04", title: "Automatisation", desc: "Mise en place des scripts d'onboarding automatique des nouveaux arrivants." }
       ],
-      packages: null // No packages pricing
+      packages: null
     },
     yobantelCaseStudy: {
       title: "Yobantel",
@@ -289,7 +291,9 @@ const content = {
       line1: "Simpler",
       line2: "systems.",
       line3: "",
-      sub: "Digital systems, automation and AI to eliminate friction.",
+      sub: "Digital systems, automation and AI to eliminate operational friction.",
+      cta: "Discuss your goals →",
+      scrollLink: "Examine the approach",
     },
     manifesto: {
       title: "Less friction.",
@@ -461,12 +465,14 @@ const content = {
       architecture: [
         { name: "Microsoft Entra ID", role: "Unified directory and conditional access rules" },
         { name: "Microsoft Intune", role: "Endpoint governance and compliance enforcement" },
-        { name: "Microsoft Defender", role: "Anti-phishing and file protection policies" }
+        { name: "Microsoft Defender", role: "Anti-phishing and file protection policies" },
+        { name: "Exchange & SharePoint", role: "Unified collaborative spaces & zero-downtime data migration" }
       ],
       steps: [
-        { num: "01", title: "Audit", desc: "Analyzing current physical servers and network nodes." },
-        { num: "02", title: "Design", desc: "Structuring security templates and groups configurations." },
-        { num: "03", title: "Migration", desc: "Zero-downtime cutover of identity profiles." }
+        { num: "01", title: "Audit & Inventory", desc: "Analyzing current physical servers and team access policies." },
+        { num: "02", title: "Architecture Design", desc: "Structuring Zero-Trust rules and conditional access policies." },
+        { num: "03", title: "Active Migration", desc: "Zero-downtime cutover of identity profiles, mailboxes and files to the cloud." },
+        { num: "04", title: "Automation", desc: "Setting up automatic onboarding scripts for new hires." }
       ],
       packages: null
     },
@@ -476,11 +482,15 @@ const content = {
       overview: "Simplifying order processing, pricing, and international payments to deliver products to West African destinations.",
       architecture: [
         { name: "React/Next.js Interface", role: "Clean consumer shopping cart flows" },
-        { name: "Logistics Engine", role: "Live custom customs tax calculators" }
+        { name: "Logistics Engine", role: "Live custom customs tax calculators" },
+        { name: "Payment Gateway", role: "Stripe and local Mobile Money integrations" },
+        { name: "Notification System", role: "Automated delivery updates sent via SMS & WhatsApp" }
       ],
       steps: [
         { num: "01", title: "Research", desc: "Field research on West African delivery bottlenecks." },
-        { num: "02", title: "Payment API Integration", desc: "Stripe and Mobile Money routing." }
+        { num: "02", title: "Modeling", desc: "Financial flow modeling and automated fee calculations." },
+        { num: "03", title: "API Development", desc: "Integrating cross-border payment terminals and carriers." },
+        { num: "04", title: "Automation", desc: "Setting up automated real-time parcel tracking." }
       ],
       packages: null
     },
@@ -490,11 +500,13 @@ const content = {
       overview: "Custom parsing workflows designed to automate indexing and reporting tasks for legal and financial documentation.",
       architecture: [
         { name: "LLM Orchestrator", role: "Context handling and evaluation" },
+        { name: "n8n / Workflows", role: "Automated task triggers and orchestration" },
         { name: "Model Context Protocol", role: "Connecting agents to local file paths and internal resources" }
       ],
       steps: [
         { num: "01", title: "Mapping", desc: "Auditing manual file operations workflows." },
-        { num: "02", title: "Prompt Tuning", desc: "Setting guidelines and evaluation templates." }
+        { num: "02", title: "Prompt Tuning", desc: "Setting guidelines and evaluation templates." },
+        { num: "03", title: "Slack/Email Setup", desc: "Connecting agents directly into team communication channels." }
       ],
       packages: null
     },
@@ -503,12 +515,13 @@ const content = {
       subtitle: "Bespoke database-centric CRM designed for rapid tracking and invoicing.",
       overview: "Tailored customer relations software engineered for speed, omitting heavy widgets to keep page load times under 200ms.",
       architecture: [
-        { name: "SQLite Database", role: "Optimized, local file-based schema" },
-        { name: "Billing Webhook", role: "Automatic invoices generation on win state" }
+        { name: "Postgre / SQLite Database", role: "Optimized, local file-based schema for instant queries" },
+        { name: "REST API", role: "Automatic sales sync with accounting tools" }
       ],
       steps: [
-        { num: "01", title: "Flows", desc: "Structuring pipeline milestones." },
-        { num: "02", title: "REST APIs", desc: "Integrating accountancy tools synchronization." }
+        { num: "01", title: "CRM Analysis", desc: "Structuring pipeline milestones." },
+        { num: "02", title: "Development", desc: "Building minimal UI focused on typing speed." },
+        { num: "03", title: "Billing Integration", desc: "Automatic invoices generation on win state." }
       ],
       packages: null
     },
