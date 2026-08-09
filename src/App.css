@@ -67,6 +67,11 @@ html {
   .grid-overlay { display: none; }
 }
 
+/* Section Scroll Margins so headers are never obscured */
+section, [id] {
+  scroll-margin-top: 110px;
+}
+
 /* ── Nav ── */
 .nav {
   position: fixed;
@@ -77,6 +82,12 @@ html {
   display: flex;
   justify-content: center;
   pointer-events: none;
+  transition: transform 0.35s var(--ease), opacity 0.35s ease;
+}
+
+.nav.is-hidden {
+  transform: translateY(-130%);
+  opacity: 0;
 }
 
 .nav-pill {
@@ -142,7 +153,7 @@ html {
 
 .nav-pill a.is-active {
   color: var(--accent);
-  font-weight: 600;
+  font-weight: 700;
   background: var(--accent-soft);
 }
 
@@ -150,8 +161,8 @@ html {
   background: color-mix(in srgb, var(--ink) 5%, transparent);
   border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
   color: var(--ink);
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -188,6 +199,56 @@ html {
 @media (max-width: 768px) {
   .nav-pill a { display: none; }
   .nav-divider { display: none; }
+}
+
+/* ── Floating Back To Top Button ── */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 95;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--bg);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.back-to-top-btn.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-to-top-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.btt-arrow {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 900;
+  transition: transform 0.2s ease;
+}
+
+.back-to-top-btn:hover .btt-arrow {
+  transform: translateY(-2px);
 }
 
 /* ── Hero Split Architectural Layout (2-Column Balanced) ── */

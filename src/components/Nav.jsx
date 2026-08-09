@@ -1,12 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 function Nav({ t, onToggleLang, theme, onToggleTheme }) {
   const [activeSection, setActiveSection] = useState("");
+  const [isHidden, setIsHidden] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const sectionIds = ["manifesto", "expertise", "projects", "contact"];
+
     const handleScroll = () => {
-      const scrollPos = window.scrollY + 250;
+      const currentScrollY = window.scrollY;
+
+      // Auto-hide on scroll down, reveal on scroll up
+      if (currentScrollY > 180) {
+        if (currentScrollY > lastScrollY.current + 10) {
+          setIsHidden(true); // Scrolling DOWN -> hide header
+        } else if (currentScrollY < lastScrollY.current - 10) {
+          setIsHidden(false); // Scrolling UP -> reveal header
+        }
+      } else {
+        setIsHidden(false); // At top -> reveal header
+      }
+
+      lastScrollY.current = currentScrollY;
+
+      // Active Section Highlight
+      const scrollPos = currentScrollY + 250;
       for (const id of sectionIds) {
         const el = document.getElementById(id);
         if (el) {
@@ -19,12 +38,13 @@ function Nav({ t, onToggleLang, theme, onToggleTheme }) {
         }
       }
     };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <nav className="nav" aria-label="Main navigation">
+    <nav className={`nav ${isHidden ? "is-hidden" : ""}`} aria-label="Main navigation">
       <div className="nav-pill">
         <a href="#top" className="nav-mark">OD</a>
         <div className="nav-divider" />

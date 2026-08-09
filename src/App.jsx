@@ -14,6 +14,7 @@ import CaseStudies from "./components/CaseStudies";
 import OtherWork from "./components/OtherWork";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import BackToTop from "./components/BackToTop";
 
 function App() {
   const [lang, setLang] = useState("fr");
@@ -52,6 +53,7 @@ function App() {
         <Contact t={t} />
       </main>
       <Footer t={t} />
+      <BackToTop />
     </div>
   );
 }
