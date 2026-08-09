@@ -176,7 +176,7 @@ function PanelContent({ item, idx, onLinkClick }) {
   );
 }
 
-function CaseStudies({ t }) {
+function CaseStudies({ t, lang }) {
   const containerRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStudy, setSelectedStudy] = useState("");
