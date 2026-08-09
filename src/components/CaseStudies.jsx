@@ -216,6 +216,7 @@ function CaseStudies({ t }) {
   return (
     <DesktopHorizontal
       t={t}
+      lang={lang}
       list={list}
       containerRef={containerRef}
       isModalOpen={isModalOpen}
@@ -227,7 +228,7 @@ function CaseStudies({ t }) {
   );
 }
 
-function DesktopHorizontal({ t, list, containerRef, isModalOpen, setIsModalOpen, selectedStudy, setSelectedStudy, handleLinkClick }) {
+function DesktopHorizontal({ t, lang, list, containerRef, isModalOpen, setIsModalOpen, selectedStudy, setSelectedStudy, handleLinkClick }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   // Track vertical scroll progress of the container
