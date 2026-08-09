@@ -149,7 +149,7 @@
   color: var(--accent);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
   .nav-pill a { display: none; }
   .nav-divider { display: none; }
 }
@@ -452,6 +452,19 @@
   }
 }
 
+@media (max-width: 768px) {
+  .expertise-row-inner {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .expertise-tools {
+    max-height: none;
+    opacity: 1;
+    transform: none;
+    padding-top: 0;
+  }
+}
+
 /* ── Expertise ── */
 .expertise {
   position: relative;
@@ -585,19 +598,6 @@
   color: var(--accent);
 }
 
-@media (max-width: 700px) {
-  .expertise-row-inner {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  .expertise-tools {
-    max-height: none;
-    opacity: 1;
-    transform: none;
-    padding-top: 0;
-  }
-}
-
 /* ── Case studies ── */
 .case-studies {
   position: relative;
@@ -699,7 +699,7 @@
 
 .cs-horizontal-container {
   position: relative;
-  height: 500vh; /* Slowed down vertical scroll track */
+  height: 350vh; /* Rythme de scroll entre cartes : ~175vh par transition */
   background: var(--bg);
 }
 
@@ -712,6 +712,71 @@
   flex-direction: column;
   justify-content: center;
   background: var(--bg);
+}
+
+/* --- Indicateur de progression (desktop) --- */
+.cs-progress {
+  position: absolute;
+  top: 50%;
+  right: 3vw;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  z-index: 20;
+}
+
+.cs-progress-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--ink-faint);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.cs-progress-dot:hover {
+  border-color: var(--accent);
+}
+
+.cs-progress-dot.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.cs-progress-count {
+  margin-top: 6px;
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+}
+
+/* --- Version mobile : stack vertical simple --- */
+.cs-mobile-container {
+  padding: 12vh var(--gutter) 8vh var(--gutter);
+  background: var(--bg);
+}
+
+.cs-mobile-title {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 6vw, 38px);
+  font-weight: 400;
+  color: var(--ink);
+  margin: 0 0 48px 0;
+}
+
+.cs-mobile-card {
+  padding: 32px 0;
+  border-top: 1px solid var(--line);
+}
+
+.cs-mobile-card:last-child {
+  border-bottom: 1px solid var(--line);
 }
 
 .cs-horizontal-title {
@@ -731,7 +796,7 @@
   height: 100%;
   width: 300vw;
   will-change: transform;
-  transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Pas de transition CSS : la position est pilotée en temps réel par le scroll */
 }
 
 .cs-horizontal-panel {
@@ -756,7 +821,7 @@
   box-sizing: border-box;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .cs-chapter-layout {
     flex-direction: column;
     gap: 36px;
@@ -2326,7 +2391,7 @@
   transform: translateY(-1.5px);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .wa-modal-content {
     padding: 28px 20px;
   }
