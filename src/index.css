@@ -1,23 +1,23 @@
 :root {
-  --bg: #F1EFE9;
-  --ink: #141412;
-  --ink-soft: rgba(20, 20, 18, 0.55);
-  --ink-faint: rgba(20, 20, 18, 0.35);
-  --line: rgba(20, 20, 18, 0.12);
-  --line-faint: rgba(20, 20, 18, 0.08);
-  --accent: oklch(50% 0.1 246);
-  --accent-soft: oklch(50% 0.1 246 / 0.08);
-  --accent-mid: oklch(50% 0.1 246 / 0.4);
-  --node-inactive: rgba(20, 20, 18, 0.6);
+  --bg: #F5F4EE;
+  --ink: #111111;
+  --ink-soft: rgba(17, 17, 17, 0.6);
+  --ink-faint: rgba(17, 17, 17, 0.35);
+  --line: rgba(17, 17, 17, 0.14);
+  --line-faint: rgba(17, 17, 17, 0.08);
+  --accent: #0033FF;
+  --accent-soft: rgba(0, 51, 255, 0.08);
+  --accent-mid: rgba(0, 51, 255, 0.4);
+  --node-inactive: rgba(17, 17, 17, 0.5);
 
-  --nav-bg: rgba(241, 239, 233, 0.6);
-  --nav-border: rgba(20, 20, 18, 0.1);
-  --grid-line: rgba(20, 20, 18, 0.035);
-  --cursor-ring: rgba(20, 20, 18, 0.35);
-  --row-hover-bg: rgba(20, 20, 18, 0.035);
+  --nav-bg: rgba(245, 244, 238, 0.85);
+  --nav-border: rgba(17, 17, 17, 0.14);
+  --grid-line: rgba(17, 17, 17, 0.04);
+  --cursor-ring: rgba(17, 17, 17, 0.35);
+  --row-hover-bg: rgba(17, 17, 17, 0.035);
 
-  --dark-bg: #141412;
-  --dark-ink: #F1EFE9;
+  --dark-bg: #111111;
+  --dark-ink: #F5F4EE;
 
   --font-serif: 'Newsreader', Georgia, serif;
   --font-sans: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;

@@ -1,44 +1,37 @@
-import { useEffect, useState } from "react";
-import NodeNetwork from "./NodeNetwork";
+import HeroAvatar3D from "./HeroAvatar3D";
 
-function Hero({ t }) {
-  const [parallax, setParallax] = useState(0);
-
-  useEffect(() => {
-    let raf = null;
-    function update() {
-      setParallax(Math.min(60, window.scrollY * 0.1));
-      raf = null;
-    }
-    function onScroll() {
-      if (!raf) raf = requestAnimationFrame(update);
-    }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, []);
-
+// Balanced Split Architectural Hero Layout (Interactive 3D Avatar Sculpture)
+function Hero() {
   return (
-    <section className="hero" id="top">
-      <div className="hero-network">
-        <NodeNetwork parallax={parallax} />
-      </div>
-      <div className="hero-content">
-        {t.hero.statusBadge && (
-          <div className="hero-status-badge">
-            <span className="hero-status-dot" />
-            <span className="hero-status-text">{t.hero.statusBadge}</span>
+    <section className="hero hero-split-layout" id="top">
+      <div className="hero-split-grid">
+        {/* Left Column: Core Narrative & Action */}
+        <div className="hero-left-col">
+          <p className="hero-clean-label">Ousmane Diop — Consultant IT Indépendant</p>
+
+          <h1 className="hero-split-title">
+            <span className="hero-split-line1">Des systèmes</span>
+            <span className="hero-split-line2">plus simples.</span>
+          </h1>
+
+          <p className="hero-split-sub">
+            Systèmes numériques, automatisation et IA pour supprimer les frictions opérationnelles.
+          </p>
+
+          <div className="hero-split-actions">
+            <a href="#contact" className="hero-cta-button">
+              Échanger sur vos enjeux →
+            </a>
+            <a href="#manifesto" className="hero-scroll-link">
+              Examiner la démarche <span className="scroll-arrow">↓</span>
+            </a>
           </div>
-        )}
-        <p className="hero-label">{t.hero.label}</p>
-        <h1 className="hero-title">
-          <span className="hero-line hero-line-1">{t.hero.line1}</span>
-          <span className="hero-line hero-line-2">{t.hero.line2}</span>
-          {t.hero.line3 && <span className="hero-line hero-line-3">{t.hero.line3}</span>}
-        </h1>
-        <p className="hero-sub">{t.hero.sub}</p>
+        </div>
+
+        {/* Right Column: Seamless 3D Avatar Sculpture (No box, no frame) */}
+        <div className="hero-right-avatar-3d">
+          <HeroAvatar3D />
+        </div>
       </div>
     </section>
   );

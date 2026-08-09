@@ -184,6 +184,14 @@ function CaseStudies({ t }) {
 
   const list = t.questionsList || [];
 
+  const handleLinkClick = useCallback((e, link) => {
+    if (link === "whatsapp-ai" || link === "yobantel") {
+      e.preventDefault();
+      setSelectedStudy(link);
+      setIsModalOpen(true);
+    }
+  }, []);
+
   // ---- VERSION MOBILE : stack vertical simple, sans sticky/300vw ----
   if (isMobile) {
     return (
@@ -205,18 +213,21 @@ function CaseStudies({ t }) {
   }
 
   // ---- VERSION DESKTOP : pinned horizontal scroll narrative ----
-  return <DesktopHorizontal
-    t={t}
-    list={list}
-    containerRef={containerRef}
-    isModalOpen={isModalOpen}
-    setIsModalOpen={setIsModalOpen}
-    selectedStudy={selectedStudy}
-    setSelectedStudy={setSelectedStudy}
-  />;
+  return (
+    <DesktopHorizontal
+      t={t}
+      list={list}
+      containerRef={containerRef}
+      isModalOpen={isModalOpen}
+      setIsModalOpen={setIsModalOpen}
+      selectedStudy={selectedStudy}
+      setSelectedStudy={setSelectedStudy}
+      handleLinkClick={handleLinkClick}
+    />
+  );
 }
 
-function DesktopHorizontal({ t, list, containerRef, isModalOpen, setIsModalOpen, selectedStudy, setSelectedStudy }) {
+function DesktopHorizontal({ t, list, containerRef, isModalOpen, setIsModalOpen, selectedStudy, setSelectedStudy, handleLinkClick }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   // Track vertical scroll progress of the container
@@ -243,14 +254,6 @@ function DesktopHorizontal({ t, list, containerRef, isModalOpen, setIsModalOpen,
     const nearest = Math.round(progress * (panelCount - 1));
     setActiveIndex(Math.max(0, Math.min(panelCount - 1, nearest)));
   });
-
-  const handleLinkClick = (e, link) => {
-    if (link === "whatsapp-ai" || link === "yobantel") {
-      e.preventDefault();
-      setSelectedStudy(link);
-      setIsModalOpen(true);
-    }
-  };
 
   const goToSlide = useCallback((i) => {
     setActiveIndex(i);

@@ -1,94 +1,199 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-const TARGET_NODES = [
-  { x: 120, y: 140, r: 4 }, { x: 300, y: 90, r: 3 }, { x: 480, y: 180, r: 5 }, { x: 620, y: 100, r: 3 },
-  { x: 200, y: 300, r: 3 }, { x: 420, y: 340, r: 4 }, { x: 600, y: 280, r: 3 }, { x: 700, y: 400, r: 4 },
-  { x: 150, y: 480, r: 3 }, { x: 340, y: 520, r: 5 }, { x: 520, y: 500, r: 3 }, { x: 660, y: 560, r: 3 },
-  { x: 250, y: 640, r: 4 }, { x: 460, y: 680, r: 3 }, { x: 600, y: 700, r: 4 }, { x: 100, y: 600, r: 3 },
-];
-
-const CHAOS_OFFSETS = [
-  { dx: -65, dy: 85 }, { dx: 95, dy: -45 }, { dx: -80, dy: 90 }, { dx: 60, dy: -95 },
-  { dx: 110, dy: -70 }, { dx: -85, dy: 60 }, { dx: 75, dy: 110 }, { dx: -95, dy: -75 },
-  { dx: -75, dy: -55 }, { dx: 85, dy: 70 }, { dx: -60, dy: -85 }, { dx: 100, dy: 45 },
-  { dx: 70, dy: -80 }, { dx: -110, dy: 55 }, { dx: 85, dy: -70 }, { dx: -50, dy: 95 },
-];
-
-const EDGE_PAIRS = [
-  [0, 1], [1, 2], [2, 3], [0, 4], [1, 5], [2, 6], [3, 7], [4, 5], [5, 6], [6, 7],
-  [4, 8], [5, 9], [6, 10], [7, 11], [8, 9], [9, 10], [10, 11], [8, 12], [9, 13], [10, 14], [11, 15], [12, 13], [13, 14], [14, 15],
-];
-
-function NodeNetwork({ parallax = 0 }) {
-  const [scrollFactor, setScrollFactor] = useState(0);
+// Interactive Organic Kinetic Constellation Canvas
+// Ultra-smooth 60fps dynamic network with interactive spring physics, energy pulses & HUD overlays
+function NodeNetwork() {
+  const canvasRef = useRef(null);
 
   useEffect(() => {
-    let animationFrameId = null;
-    function handleScroll() {
-      if (!animationFrameId) {
-        animationFrameId = requestAnimationFrame(() => {
-          // Progress goes from 0 (at top) to 1 (when scrolled 400px down)
-          const scrollY = window.scrollY;
-          const factor = Math.min(1, Math.max(0, scrollY / 400));
-          setScrollFactor(factor);
-          animationFrameId = null;
-        });
-      }
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    let animationFrameId;
+
+    let width = (canvas.width = canvas.parentElement.offsetWidth || 600);
+    let height = (canvas.height = canvas.parentElement.offsetHeight || 600);
+
+    const handleResize = () => {
+      if (!canvas.parentElement) return;
+      width = canvas.width = canvas.parentElement.offsetWidth || 600;
+      height = canvas.height = canvas.parentElement.offsetHeight || 600;
+    };
+    window.addEventListener("resize", handleResize);
+
+    // Network Hub Nodes
+    const nodeCount = 22;
+    const nodes = [];
+    const labels = ["CLOUD.CORE", "AI.AGENT", "AUTOMATION", "SECURITY", "DATA.FLOW", "IDENTITY", "N8N.WORKFLOW", "AZURE", "LLM.MODEL", "REST.API"];
+
+    for (let i = 0; i < nodeCount; i++) {
+      nodes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        radius: Math.random() * 2.5 + 2,
+        label: i < labels.length ? labels[i] : null,
+        isHub: i < 5,
+        pulse: Math.random() * Math.PI * 2
+      });
     }
-    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    // Energy pulses traveling along connections
+    const pulses = [];
+    for (let i = 0; i < 6; i++) {
+      pulses.push({
+        from: Math.floor(Math.random() * nodeCount),
+        to: Math.floor(Math.random() * nodeCount),
+        progress: Math.random(),
+        speed: 0.005 + Math.random() * 0.008
+      });
+    }
+
+    // Mouse position tracking with physics radius
+    let mouse = { x: -1000, y: -1000, active: false };
+    const handleMouseMove = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+      mouse.active = true;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.active = false;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    canvas.addEventListener("mouseleave", handleMouseLeave);
+
+    // Animation Loop
+    let time = 0;
+    const render = () => {
+      time += 0.015;
+      ctx.clearRect(0, 0, width, height);
+
+      // 1. Update positions & handle boundaries
+      nodes.forEach((node) => {
+        node.x += node.vx;
+        node.y += node.vy;
+        node.pulse += 0.02;
+
+        if (node.x < 40 || node.x > width - 40) node.vx *= -1;
+        if (node.y < 40 || node.y > height - 40) node.vy *= -1;
+
+        // Mouse repulsion & spring reaction
+        if (mouse.active) {
+          const dx = mouse.x - node.x;
+          const dy = mouse.y - node.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 140) {
+            const force = (140 - dist) / 140;
+            node.x -= (dx / dist) * force * 2;
+            node.y -= (dy / dist) * force * 2;
+          }
+        }
+      });
+
+      // 2. Draw Connection Lines
+      const maxDistance = 160;
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const n1 = nodes[i];
+          const n2 = nodes[j];
+          const dx = n2.x - n1.x;
+          const dy = n2.y - n1.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < maxDistance) {
+            const alpha = (1 - dist / maxDistance) * 0.35;
+            ctx.beginPath();
+            ctx.moveTo(n1.x, n1.y);
+            
+            // Curved connection for organic feel
+            const midX = (n1.x + n2.x) / 2 + Math.sin(time + i) * 8;
+            const midY = (n1.y + n2.y) / 2 + Math.cos(time + j) * 8;
+            ctx.quadraticCurveTo(midX, midY, n2.x, n2.y);
+
+            const isHubConn = n1.isHub || n2.isHub;
+            ctx.strokeStyle = isHubConn 
+              ? `rgba(0, 51, 255, ${alpha})` // Cobalt Blue accent
+              : `rgba(17, 17, 17, ${alpha * 0.7})`; // Ink line
+
+            ctx.lineWidth = isHubConn ? 1.2 : 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // 3. Draw Traveling Energy Pulses
+      pulses.forEach((p) => {
+        p.progress += p.speed;
+        if (p.progress >= 1) {
+          p.progress = 0;
+          p.from = Math.floor(Math.random() * nodeCount);
+          p.to = Math.floor(Math.random() * nodeCount);
+        }
+        const n1 = nodes[p.from];
+        const n2 = nodes[p.to];
+        const px = n1.x + (n2.x - n1.x) * p.progress;
+        const py = n1.y + (n2.y - n1.y) * p.progress;
+
+        ctx.beginPath();
+        ctx.arc(px, py, 3, 0, Math.PI * 2);
+        ctx.fillStyle = "#0033FF";
+        ctx.shadowColor = "#0033FF";
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.shadowBlur = 0; // reset shadow
+      });
+
+      // 4. Draw Nodes & HUD Labels
+      nodes.forEach((node) => {
+        const pSize = Math.sin(node.pulse) * 0.8 + node.radius;
+
+        // Node Outer Glow Ring for Hubs
+        if (node.isHub) {
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, pSize * 2.8, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(0, 51, 255, 0.08)";
+          ctx.fill();
+        }
+
+        // Inner Solid Node
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, pSize, 0, Math.PI * 2);
+        ctx.fillStyle = node.isHub ? "#0033FF" : "#111111";
+        ctx.fill();
+
+        // Technical HUD Callout Label
+        if (node.label) {
+          ctx.font = "10px ui-monospace, SFMono-Regular, Menlo, monospace";
+          ctx.fillStyle = node.isHub ? "#0033FF" : "rgba(17, 17, 17, 0.7)";
+          ctx.fillText(node.label, node.x + 10, node.y + 3);
+
+          // Tiny hairline anchor dot
+          ctx.beginPath();
+          ctx.arc(node.x + 6, node.y, 1, 0, Math.PI * 2);
+          ctx.fillStyle = "#0033FF";
+          ctx.fill();
+        }
+      });
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
-  // Compute interpolated node positions based on scrollFactor (0 = chaos, 1 = order)
-  const currentNodes = TARGET_NODES.map((node, i) => {
-    const chaos = CHAOS_OFFSETS[i];
-    const unalignment = 1 - scrollFactor;
-    return {
-      ...node,
-      x: node.x + chaos.dx * unalignment,
-      y: node.y + chaos.dy * unalignment,
-      color: i % 4 === 0 ? "var(--accent)" : "var(--node-inactive)",
-      dur: 8 + (i % 5),
-      delay: (i * 0.3) % 4,
-    };
-  });
-
-  const currentEdges = EDGE_PAIRS.map((pair, i) => {
-    const a = currentNodes[pair[0]];
-    const b = currentNodes[pair[1]];
-    return {
-      x1: a.x, y1: a.y, x2: b.x, y2: b.y,
-      dur: 12 + (i % 6),
-      delay: (i * 0.4) % 5
-    };
-  });
-
   return (
-    <div className="node-network" aria-hidden="true">
-      <svg viewBox="0 0 800 800" style={{ transform: `translateY(${parallax}px)` }}>
-        <g className="node-network-sway">
-          {currentEdges.map((e, i) => (
-            <line
-              key={i}
-              x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
-              className="node-network-edge"
-              style={{ animationDuration: `${e.dur}s`, animationDelay: `${e.delay}s` }}
-            />
-          ))}
-          {currentNodes.map((n, i) => (
-            <circle
-              key={i}
-              cx={n.x} cy={n.y} r={n.r}
-              fill={n.color}
-              className="node-network-dot"
-              style={{ animationDuration: `${n.dur}s`, animationDelay: `${n.delay}s` }}
-            />
-          ))}
-        </g>
-      </svg>
+    <div className="node-network-3d" aria-hidden="true">
+      <canvas ref={canvasRef} />
     </div>
   );
 }

@@ -13,11 +13,11 @@ const content = {
     },
     hero: {
       label: "Ousmane Diop — Consultant IT Indépendant",
-      statusBadge: "Bruxelles • Remote",
-      line1: "Des systèmes qui",
-      line2: "simplifient le travail.",
+      statusBadge: "",
+      line1: "Des systèmes",
+      line2: "plus simples.",
       line3: "",
-      sub: "J'aide les organisations à concevoir des systèmes plus simples, plus fiables et plus faciles à faire évoluer.",
+      sub: "Systèmes numériques, automatisation et IA pour supprimer les frictions.",
     },
     manifesto: {
       title: "Moins de friction.",
@@ -285,11 +285,11 @@ const content = {
     },
     hero: {
       label: "Ousmane Diop — Independent IT Consultant",
-      statusBadge: "Brussels • Remote",
-      line1: "Systems that simplify",
-      line2: "the way teams work.",
+      statusBadge: "",
+      line1: "Simpler",
+      line2: "systems.",
       line3: "",
-      sub: "I help organisations build simpler, more reliable systems that scale naturally.",
+      sub: "Digital systems, automation and AI to eliminate friction.",
     },
     manifesto: {
       title: "Less friction.",
