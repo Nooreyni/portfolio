@@ -7,7 +7,7 @@ const content = {
     nav: { 
       manifesto: "Approche", 
       expertise: "Expertises", 
-      projects: "Selected Systems", 
+      projects: "Réalisations", 
       contact: "Contact", 
       langLabel: "EN" 
     },
@@ -96,7 +96,7 @@ const content = {
         tools: ["Gouvernance IT", "Transformation Numérique", "Analyse de Processus", "Gestion de Projet", "ITIL v4", "Design de Solution"],
       },
     ],
-    projectsLabel: "De la question à la solution.",
+    projectsLabel: "RÉALISATIONS & SYSTÈMES CONÇUS",
     conversationHook: "Chaque projet commence par une question. La technologie n'est qu'une partie de la réponse.",
     questionsList: [
       {
@@ -281,7 +281,7 @@ const content = {
     nav: { 
       manifesto: "Approach", 
       expertise: "Expertise", 
-      projects: "Selected Systems", 
+      projects: "Solutions", 
       contact: "Contact", 
       langLabel: "FR" 
     },
@@ -370,7 +370,7 @@ const content = {
         tools: ["IT Governance", "Digital Transformation", "Business Process Analysis", "Project Management", "ITIL v4", "Solution Design"],
       },
     ],
-    projectsLabel: "From question to solution.",
+    projectsLabel: "BUILT SYSTEMS & CASE STUDIES",
     conversationHook: "Every project starts with a question. Technology is only part of the answer.",
     questionsList: [
       {
