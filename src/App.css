@@ -778,25 +778,142 @@ section, [id] {
 }
 
 @media (max-width: 768px) {
+  .chapters {
+    padding: 60px var(--gutter);
+  }
+
   .chapter-sticky {
-    position: static;
+    position: relative;
+    top: auto;
     height: auto;
-    min-height: 60vh;
+    min-height: auto !important;
+    padding: 28px 0;
+    border-bottom: 1px dashed var(--line);
     transform: none !important;
     filter: none !important;
+  }
+
+  .chapter-sticky:last-child {
+    border-bottom: none;
+  }
+
+  .chapter-title {
+    font-size: clamp(28px, 7.5vw, 42px);
+    line-height: 1.15;
+  }
+
+  .chapter-body {
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 1.5;
   }
 }
 
 @media (max-width: 768px) {
+  .expertise {
+    padding: 60px var(--gutter);
+  }
+
+  .expertise-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+    border-top: none;
+  }
+
+  .expertise-row {
+    border: none !important;
+  }
+
+  .expertise-rule {
+    display: none !important;
+  }
+
   .expertise-row-inner {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: color-mix(in srgb, var(--bg) 96.5%, var(--ink) 3.5%);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 22px 20px;
+    transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    grid-template-columns: unset;
+  }
+
+  .expertise-row-inner:active,
+  .expertise-row.is-hovered .expertise-row-inner {
+    border-color: var(--accent);
+    background: var(--bg);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 12%, transparent);
+    transform: translateY(-2px);
+  }
+
+  .expertise-icon-box {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .expertise-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 12px;
   }
+
+  .expertise-title {
+    font-family: var(--font-sans);
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.25;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .expertise-arrow {
+    font-size: 16px;
+    color: var(--accent);
+  }
+
+  .expertise-desc {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
   .expertise-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
     max-height: none;
     opacity: 1;
     transform: none;
-    padding-top: 0;
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+    margin-top: 4px;
+  }
+
+  .expertise-tool-badge {
+    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    background: color-mix(in srgb, var(--bg) 90%, var(--ink) 10%);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 5px 12px;
   }
 }
 
@@ -3761,4 +3878,138 @@ section, [id] {
     padding: 24px 16px 36px 16px;
     border-radius: 18px;
   }
+}
+
+/* ==========================================================================
+   Mobile-Exclusive Vertical Interactive Accordion Stepper for Approche
+   ========================================================================== */
+
+.chapters-mobile-view {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .chapters-desktop-view {
+    display: none !important;
+  }
+
+  .chapters-mobile-view {
+    display: block !important;
+    padding: 60px var(--gutter);
+    background: var(--bg);
+    border-bottom: 1px dashed var(--line);
+    position: relative;
+    z-index: 20;
+  }
+
+  .chapters-mobile-header {
+    margin-bottom: 24px;
+  }
+
+  .chapters-mobile-label {
+    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .chapters-mobile-heading {
+    font-family: var(--font-sans);
+    font-size: clamp(24px, 6.5vw, 32px);
+    font-weight: 800;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .chapters-accordion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .chapters-accordion-item {
+    background: color-mix(in srgb, var(--bg) 96.5%, var(--ink) 3.5%);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .chapters-accordion-item.is-open {
+    border-color: var(--accent);
+    background: var(--bg);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+
+  .chapters-accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .chapters-accordion-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .chapters-accordion-num {
+    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+    border-radius: 8px;
+    padding: 4px 8px;
+    flex-shrink: 0;
+  }
+
+  .chapters-accordion-title {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .chapters-accordion-toggle-icon {
+    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+  }
+
+  .chapters-accordion-item.is-open .chapters-accordion-toggle-icon {
+    color: var(--accent);
+  }
+
+  .chapters-accordion-content {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    animation: fadeInAccordion 0.3s ease;
+  }
+
+  .chapters-accordion-body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+}
+
+@keyframes fadeInAccordion {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
