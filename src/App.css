@@ -3600,3 +3600,165 @@ section, [id] {
 
 .s-blueprint-sub.text-center { text-anchor: middle; }
 .s-blueprint-sub.text-right { text-anchor: end; }
+
+/* ==========================================================================
+   Mobile-First Responsive Enhancements (Desktop Unchanged)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  :root {
+    --gutter: 20px;
+  }
+
+  body {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Navigation Mobile */
+  .nav-pill {
+    padding: 6px 14px;
+    gap: 12px;
+  }
+
+  /* Hero Section Mobile */
+  .hero-split-layout {
+    min-height: auto;
+    padding: 100px var(--gutter) 40px var(--gutter);
+  }
+
+  .hero-split-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .hero-split-title {
+    font-size: clamp(30px, 8.5vw, 44px);
+    line-height: 1.15;
+  }
+
+  .hero-split-sub {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .hero-split-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .hero-cta-button,
+  .hero-scroll-link {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    min-height: 48px;
+    box-sizing: border-box;
+  }
+
+  .hero-right-avatar-3d {
+    height: 320px;
+    max-width: 100%;
+  }
+
+  /* Manifesto Section Mobile */
+  .manifesto {
+    padding: 80px var(--gutter);
+  }
+
+  .manifesto-text {
+    font-size: clamp(20px, 5.5vw, 32px);
+    line-height: 1.35;
+  }
+
+  /* Case Studies Mobile */
+  .dossier-card {
+    padding: 24px 18px;
+  }
+
+  .dossier-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .dossier-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .dossier-btn-primary,
+  .dossier-btn-secondary {
+    width: 100%;
+    justify-content: center;
+    min-height: 46px;
+    box-sizing: border-box;
+  }
+
+  /* Other Work Matrix Mobile */
+  .ow-table-head {
+    display: none;
+  }
+
+  .ow-table-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px 16px;
+  }
+
+  .ow-row-btn {
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 6px;
+  }
+
+  /* Contact Section Mobile */
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .contact-field-group {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form-col {
+    padding: 24px 18px;
+  }
+
+  .contact-submit-btn,
+  .contact-copy-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 48px;
+    box-sizing: border-box;
+  }
+
+  .contact-social-links {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-right-avatar-3d {
+    height: 280px;
+  }
+
+  .dossier-card {
+    padding: 20px 14px;
+  }
+
+  .wa-modal-overlay {
+    padding: 10px;
+  }
+
+  .wa-modal-content {
+    padding: 24px 16px 36px 16px;
+    border-radius: 18px;
+  }
+}
