@@ -190,7 +190,14 @@ function HeroAvatar3D() {
       target.y = y * 0.45;
     };
 
+    const handleMouseLeave = () => {
+      // Reset gaze back to straight ahead when cursor leaves the window
+      target.x = 0;
+      target.y = 0;
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseleave", handleMouseLeave);
 
     const handleResize = () => {
       if (!container) return;
@@ -249,6 +256,7 @@ function HeroAvatar3D() {
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseleave", handleMouseLeave);
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animId);
       renderer.dispose();
