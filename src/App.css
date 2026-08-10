@@ -1397,7 +1397,555 @@ section, [id] {
   stroke-width: 1.5;
   transition: stroke-color 0.3s ease;
   animation: hubPulse 4s infinite ease-in-out;
-  transform-origin: center;
+}
+
+/* ── Concept 1: Selected Systems Blueprint Dossiers Stack ── */
+.case-studies-section {
+  padding: 120px var(--gutter);
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+
+.case-studies-header {
+  max-width: 800px;
+  margin-bottom: 72px;
+}
+
+.cs-header-label {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.cs-header-title {
+  font-size: clamp(38px, 5.5vw, 72px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+
+.cs-header-sub {
+  font-size: clamp(16px, 1.8vw, 20px);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.dossiers-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.dossier-card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 44px 40px;
+  position: relative;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dossier-card.featured-dossier {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  box-shadow: 0 16px 40px -10px color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.dossier-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.dossier-left-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.dossier-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 95%, var(--ink) 5%);
+  width: fit-content;
+  margin-bottom: 24px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  background-color: var(--accent);
+  border-radius: 50%;
+}
+
+.status-dot.green { background-color: #10b981; }
+.status-dot.blue { background-color: #3b82f6; }
+
+.dossier-num {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.dossier-title {
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.dossier-subtitle {
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin-bottom: 28px;
+}
+
+.dossier-highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dossier-highlights li {
+  font-size: 14.5px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dossier-highlights .bullet {
+  color: var(--accent);
+  font-size: 11px;
+}
+
+.dossier-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.dossier-tag {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+}
+
+.dossier-price-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 12px;
+  margin-bottom: 32px;
+  padding: 10px 16px;
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+.price-label { color: var(--ink-soft); }
+.price-val { font-weight: 700; color: var(--ink); }
+
+.dossier-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dossier-btn-primary {
+  padding: 14px 28px;
+  background: var(--ink);
+  color: var(--bg);
+  border: 1px solid var(--ink);
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.dossier-btn-primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.dossier-btn-secondary {
+  padding: 14px 28px;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  text-decoration: none;
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 100px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.dossier-btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Interactive WhatsApp Simulator Widget ── */
+.wa-simulator-box {
+  background: #0b141a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #e9edef;
+  display: flex;
+  flex-direction: column;
+  height: 480px;
+}
+
+.wa-sim-header {
+  background: #202c33;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wa-sim-avatar {
+  width: 38px;
+  height: 38px;
+  background: #00a884;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.wa-sim-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.wa-sim-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.wa-sim-status {
+  font-size: 11px;
+  color: #00a884;
+}
+
+.wa-sim-body {
+  flex: 1;
+  padding: 18px;
+  background: #0b141a;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wa-msg-bubble {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
+.msg-bot {
+  background: #202c33;
+  color: #e9edef;
+  align-self: flex-start;
+  border-top-left-radius: 2px;
+}
+
+.msg-user {
+  background: #005c4b;
+  color: #e9edef;
+  align-self: flex-end;
+  border-top-right-radius: 2px;
+}
+
+.is-typing {
+  display: flex;
+  gap: 5px;
+  padding: 12px 16px;
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  background: #8696a0;
+  border-radius: 50%;
+  animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1.1); opacity: 1; }
+}
+
+.wa-sim-actions {
+  background: #202c33;
+  padding: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wa-actions-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8696a0;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.wa-prompts-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wa-prompt-btn {
+  background: #111b21;
+  border: 1px solid #00a884;
+  color: #00a884;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.wa-prompt-btn:hover:not(:disabled) {
+  background: #00a884;
+  color: #111b21;
+}
+
+/* ── Interactive Tax Calculator Widget ── */
+.tax-widget-box {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 28px 24px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+}
+
+.tax-widget-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tax-widget-badge {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.tax-widget-tag {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 9.5px;
+  color: var(--ink-soft);
+}
+
+.tax-widget-controls {
+  margin-bottom: 24px;
+}
+
+.tax-slider-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.tax-val-highlight {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 16px;
+  color: var(--accent);
+}
+
+.tax-range-slider {
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.tax-results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.tax-res-card {
+  background: color-mix(in srgb, var(--bg) 95%, var(--ink) 5%);
+  border: 1px solid var(--line);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tax-res-card.result-net {
+  grid-column: span 2;
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+.tax-res-lbl {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 10px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+
+.tax-res-val {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.tax-res-val.text-red { color: #ef4444; }
+.tax-res-val.val-cobalt { color: var(--accent); font-size: 16px; }
+
+/* ── Interactive Yobantel Workflow Stepper Widget ── */
+.yobantel-widget-box {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 28px 24px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+}
+
+.yobantel-widget-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.yobantel-tag {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.yobantel-status {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 10px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.yobantel-stepper-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.yobantel-step-card {
+  border: 1px solid var(--line);
+  padding: 14px 16px;
+  background: var(--bg);
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.yobantel-step-card.is-active {
+  border-color: var(--accent);
+  transform: translateX(4px);
+  background: color-mix(in srgb, var(--accent) 4%, transparent);
+}
+
+.step-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.step-card-title {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.step-card-indicator {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: 10px;
+  color: var(--accent);
+}
+
+.step-card-desc {
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+@media (max-width: 960px) {
+  .dossier-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .dossier-card {
+    padding: 28px 20px;
+  }
 }
 
 .people-hub { animation-delay: 0s; }

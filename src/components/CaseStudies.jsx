@@ -1,309 +1,361 @@
-import { useRef, useState, useCallback } from "react";
-import { useScroll, useTransform, useMotionValueEvent, motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import Appear from "./Appear";
 import CaseStudyModal from "./CaseStudyModal";
-import { useIsMobile } from "../hooks/useMediaQuery";
 
-// Custom SVG abstract animations for each question type
-function ClarifyAnimation() {
+// 1. WhatsApp Live Interactive Chat Simulator Widget
+function WhatsAppSimulator({ isEn }) {
+  const [messages, setMessages] = useState([
+    { sender: "bot", text: isEn ? "Hello! 👋 Welcome to Bistro Bruxellois. How can I help you today?" : "Bonjour ! 👋 Bienvenue au Bistro Bruxellois. Comment puis-je vous aider aujourd'hui ?" }
+  ]);
+  const [isTyping, setIsTyping] = useState(false);
+
+  const prompts = isEn ? [
+    { label: "🍕 Menu & Prices", botReply: "Here is our menu:\n- Daily Special: 16,50 €\n- Woodfired Pizza: 14,00 €\n- Artisanal Drinks: 4,50 €" },
+    { label: "📅 Book a Table", botReply: "Table for how many people and at what time? I can confirm your booking instantly!" },
+    { label: "🕒 Business Hours", botReply: "We are open Tuesday to Sunday, 12:00 to 22:30. Closed on Mondays!" }
+  ] : [
+    { label: "🍕 Menu & Tarifs", botReply: "Voici notre carte du jour :\n- Plat du jour : 16,50 €\n- Pizza feu de bois : 14,00 €\n- Boissons artisanales : 4,50 €" },
+    { label: "📅 Réserver une table", botReply: "Pour combien de personnes et à quelle heure ? Je valide votre réservation immédiatement !" },
+    { label: "🕒 Horaires d'ouverture", botReply: "Nous sommes ouverts du Mardi au Dimanche de 12h00 à 22h30. Fermé le Lundi !" }
+  ];
+
+  const handlePromptClick = (prompt) => {
+    if (isTyping) return;
+
+    // Add user message
+    setMessages((prev) => [...prev, { sender: "user", text: prompt.label }]);
+    setIsTyping(true);
+
+    // Simulate bot thinking/typing delay
+    setTimeout(() => {
+      setMessages((prev) => [...prev, { sender: "bot", text: prompt.botReply }]);
+      setIsTyping(false);
+    }, 600);
+  };
+
   return (
-    <div className="abstract-visual-box clarify-visual">
-      <svg viewBox="0 0 400 300" className="abstract-svg">
-        {/* Chaos dots that morph or float into structured grid */}
-        <g className="chaos-group">
-          {/* Scattered dots */}
-          <circle cx="60" cy="80" r="4" className="chaos-dot d1" />
-          <circle cx="90" cy="220" r="5" className="chaos-dot d2" />
-          <circle cx="150" cy="50" r="3" className="chaos-dot d3" />
-          <circle cx="280" cy="70" r="4" className="chaos-dot d4" />
-          <circle cx="340" cy="190" r="6" className="chaos-dot d5" />
-          <circle cx="310" cy="250" r="4" className="chaos-dot d6" />
-        </g>
+    <div className="wa-simulator-box">
+      {/* Smartphone Header */}
+      <div className="wa-sim-header">
+        <div className="wa-sim-avatar">🤖</div>
+        <div className="wa-sim-meta">
+          <span className="wa-sim-name">Assistant Bistro PME</span>
+          <span className="wa-sim-status">✦ {isEn ? "Online (AI Bot)" : "En ligne (Bot IA)"}</span>
+        </div>
+      </div>
 
-        {/* Structured Grid that fades in/out */}
-        <g className="structure-group">
-          {/* Grid lines */}
-          <line x1="120" y1="100" x2="280" y2="100" className="structure-line" />
-          <line x1="120" y1="150" x2="280" y2="150" className="structure-line" />
-          <line x1="120" y1="200" x2="280" y2="200" className="structure-line" />
-          
-          <line x1="150" y1="70" x2="150" y2="230" className="structure-line" />
-          <line x1="200" y1="70" x2="200" y2="230" className="structure-line" />
-          <line x1="250" y1="70" x2="250" y2="230" className="structure-line" />
+      {/* Chat Messages Screen */}
+      <div className="wa-sim-body">
+        {messages.map((m, idx) => (
+          <div key={idx} className={`wa-msg-bubble ${m.sender === "user" ? "msg-user" : "msg-bot"}`}>
+            <p>{m.text}</p>
+          </div>
+        ))}
 
-          {/* Clean intersection nodes */}
-          <circle cx="150" cy="100" r="5" className="struct-node n1" />
-          <circle cx="200" cy="100" r="5" className="struct-node n2" />
-          <circle cx="250" cy="100" r="5" className="struct-node n3" />
-          
-          <circle cx="150" cy="150" r="5" className="struct-node n4" />
-          <circle cx="200" cy="150" r="5" className="struct-node n5" />
-          <circle cx="250" cy="150" r="5" className="struct-node n6" />
-          
-          <circle cx="150" cy="200" r="5" className="struct-node n7" />
-          <circle cx="200" cy="200" r="5" className="struct-node n8" />
-          <circle cx="250" cy="200" r="5" className="struct-node n9" />
-        </g>
-
-        {/* Flow connection path linking chaos to structure */}
-        <path d="M 60 80 Q 110 50 150 100" className="flow-connector c1" />
-        <path d="M 90 220 Q 120 180 200 150" className="flow-connector c2" />
-        <path d="M 310 250 Q 280 220 250 200" className="flow-connector c3" />
-      </svg>
-    </div>
-  );
-}
-
-function ConnectAnimation() {
-  return (
-    <div className="abstract-visual-box connect-visual">
-      <svg viewBox="0 0 400 300" className="abstract-svg">
-        {/* Three main hub nodes */}
-        <g className="hubs">
-          {/* People hub */}
-          <circle cx="100" cy="150" r="28" className="hub-circle people-hub" />
-          <text x="100" y="154" className="hub-text">HUMAN</text>
-
-          {/* System hub */}
-          <circle cx="200" cy="80" r="28" className="hub-circle system-hub" />
-          <text x="200" y="84" className="hub-text">SYSTEM</text>
-
-          {/* Process hub */}
-          <circle cx="300" cy="150" r="28" className="hub-circle process-hub" />
-          <text x="300" y="154" className="hub-text">PROCESS</text>
-        </g>
-
-        {/* Continuous pulse loop paths connecting them */}
-        <path d="M 100 150 L 200 80" className="connect-link l1" />
-        <path d="M 200 80 L 300 150" className="connect-link l2" />
-        <path d="M 300 150 C 200 240 200 240 100 150" className="connect-link l3" />
-
-        {/* Floating signal packets */}
-        <circle cx="0" cy="0" r="4" className="signal-packet p1" />
-        <circle cx="0" cy="0" r="4" className="signal-packet p2" />
-        <circle cx="0" cy="0" r="4" className="signal-packet p3" />
-      </svg>
-    </div>
-  );
-}
-
-function ScaleAnimation() {
-  return (
-    <div className="abstract-visual-box scale-visual">
-      <svg viewBox="0 0 400 300" className="abstract-svg">
-        {/* Growing levels that get stronger but remain simple */}
-        <g className="scale-base">
-          {/* Bottom solid platform */}
-          <rect x="80" y="220" width="240" height="24" rx="4" className="scale-layer layer-base" />
-          <text x="200" y="235" className="layer-text">FOUNDATION (M365 & Security)</text>
-
-          {/* Middle tier */}
-          <rect x="110" y="160" width="180" height="24" rx="4" className="scale-layer layer-mid" />
-          <text x="200" y="175" className="layer-text">INTEGRATIONS (Identity)</text>
-
-          {/* Top tier */}
-          <rect x="140" y="100" width="120" height="24" rx="4" className="scale-layer layer-top" />
-          <text x="200" y="115" className="layer-text">AUTOMATION</text>
-        </g>
-
-        {/* Vertical alignment indicator showing strength/growth */}
-        <line x1="200" y1="60" x2="200" y2="240" className="alignment-core" />
-        <circle cx="200" cy="60" r="6" className="growth-node" />
-        
-        {/* Subtle rising expansion lines */}
-        <path d="M 80 220 L 110 160" className="scale-join" />
-        <path d="M 320 220 L 290 160" className="scale-join" />
-        <path d="M 110 160 L 140 100" className="scale-join" />
-        <path d="M 290 160 L 260 100" className="scale-join" />
-      </svg>
-    </div>
-  );
-}
-
-// Contenu partagé d'un panneau de projet (utilisé desktop ET mobile)
-function PanelContent({ item, idx, onLinkClick }) {
-  return (
-    <div className="cs-chapter-layout">
-      {/* Left content block: Storytelling questions & proof */}
-      <div className="cs-chapter-left">
-        {item.isFeatured && (
-          <div className="cs-featured-badge-pulse">
-            <span className="pulse-dot"></span>
-            <span className="pulse-text">{item.badgeText}</span>
+        {isTyping && (
+          <div className="wa-msg-bubble msg-bot is-typing">
+            <span className="typing-dot"></span>
+            <span className="typing-dot"></span>
+            <span className="typing-dot"></span>
           </div>
         )}
-
-        <span className="cs-chapter-num">0{idx + 1}</span>
-        <h3 className="cs-chapter-question">{item.question}</h3>
-        <p className="cs-chapter-desc">{item.paragraph}</p>
-
-        <div className="cs-chapter-separator" />
-
-        <div className="cs-chapter-proof">
-          <h4 className="cs-chapter-project-name">{item.name}</h4>
-          <p className="cs-chapter-project-purpose">{item.purpose}</p>
-
-          <ul className="cs-chapter-highlights">
-            {item.highlights.map((highlight, hIdx) => (
-              <li key={hIdx} className="cs-chapter-highlight-item">
-                <span className="cs-chapter-bullet">✦</span>
-                {highlight}
-              </li>
-            ))}
-          </ul>
-
-          {item.linkText && (
-            <a
-              href={item.link === "whatsapp-ai" || item.link === "yobantel" ? "#" : item.link}
-              className={`cs-chapter-cta ${item.isFeatured ? "featured-btn-cta" : ""}`}
-              onClick={(e) => onLinkClick(e, item.link)}
-              target={item.link.startsWith("http") ? "_blank" : "_self"}
-              rel={item.link.startsWith("http") ? "noopener noreferrer" : ""}
-            >
-              {item.linkText}
-            </a>
-          )}
-        </div>
       </div>
 
-      {/* Right visual block: Abstract SVG animation */}
-      <div className={`cs-chapter-right ${item.isFeatured ? "featured-visual-glow" : ""}`}>
-        {idx === 0 && <ClarifyAnimation />}
-        {idx === 1 && <ConnectAnimation />}
-        {idx === 2 && <ScaleAnimation />}
+      {/* Interactive Quick Action Prompts */}
+      <div className="wa-sim-actions">
+        <span className="wa-actions-label">{isEn ? "Test interactive prompt:" : "Tester une commande :"}</span>
+        <div className="wa-prompts-list">
+          {prompts.map((p, idx) => (
+            <button
+              key={idx}
+              type="button"
+              className="wa-prompt-btn"
+              onClick={() => handlePromptClick(p)}
+              disabled={isTyping}
+            >
+              {p.label}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
-function CaseStudies({ t, lang }) {
-  const containerRef = useRef(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedStudy, setSelectedStudy] = useState("");
-  const isMobile = useIsMobile();
+// 2. OutilsBelges Live Interactive Tax Calculator Preview Widget
+function TaxCalculatorWidget({ isEn }) {
+  const [grossSalary, setGrossSalary] = useState(3400);
 
-  const list = t.questionsList || [];
+  // Approximate Belgian Tax Calculation Logic
+  const onss = Math.round(grossSalary * 0.1307);
+  const taxable = grossSalary - onss;
+  const taxEst = Math.round(taxable * 0.28);
+  const netSalary = taxable - taxEst;
 
-  const handleLinkClick = useCallback((e, link) => {
-    if (link === "whatsapp-ai" || link === "yobantel") {
-      e.preventDefault();
-      setSelectedStudy(link);
-      setIsModalOpen(true);
-    }
-  }, []);
+  return (
+    <div className="tax-widget-box">
+      <div className="tax-widget-header">
+        <span className="tax-widget-badge">OUTILSBELGES.BE</span>
+        <span className="tax-widget-tag">{isEn ? "OFFICIAL TAX CALCULATOR" : "CALCULATEUR OFFICIEL"}</span>
+      </div>
 
-  // ---- VERSION MOBILE : stack vertical simple, sans sticky/300vw ----
-  if (isMobile) {
-    return (
-      <div id="projects" className="cs-mobile-container">
-        <h2 className="cs-mobile-title">{t.projectsLabel}</h2>
-        {list.map((item, idx) => (
-          <Appear key={item.name} className="cs-mobile-card">
-            <PanelContent item={item} idx={idx} onLinkClick={handleLinkClick} />
-          </Appear>
-        ))}
-        <CaseStudyModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          t={t}
-          studyKey={selectedStudy}
+      <div className="tax-widget-controls">
+        <label className="tax-slider-label">
+          <span>{isEn ? "Gross Monthly Salary:" : "Salaire Brut Mensuel :"}</span>
+          <span className="tax-val-highlight">{grossSalary.toLocaleString()} €</span>
+        </label>
+        <input
+          type="range"
+          min="1900"
+          max="7500"
+          step="100"
+          value={grossSalary}
+          onChange={(e) => setGrossSalary(Number(e.target.value))}
+          className="tax-range-slider"
         />
       </div>
-    );
-  }
 
-  // ---- VERSION DESKTOP : pinned horizontal scroll narrative ----
-  return (
-    <DesktopHorizontal
-      t={t}
-      lang={lang}
-      list={list}
-      containerRef={containerRef}
-      isModalOpen={isModalOpen}
-      setIsModalOpen={setIsModalOpen}
-      selectedStudy={selectedStudy}
-      setSelectedStudy={setSelectedStudy}
-      handleLinkClick={handleLinkClick}
-    />
+      <div className="tax-results-grid">
+        <div className="tax-res-card">
+          <span className="tax-res-lbl">Brut</span>
+          <span className="tax-res-val">{grossSalary.toLocaleString()} €</span>
+        </div>
+        <div className="tax-res-card">
+          <span className="tax-res-lbl">ONSS (13.07%)</span>
+          <span className="tax-res-val text-red">-{onss.toLocaleString()} €</span>
+        </div>
+        <div className="tax-res-card">
+          <span className="tax-res-lbl">{isEn ? "Est. Tax" : "Précompte est."}</span>
+          <span className="tax-res-val text-red">-{taxEst.toLocaleString()} €</span>
+        </div>
+        <div className="tax-res-card result-net">
+          <span className="tax-res-lbl">{isEn ? "Estimated Net" : "Net Estimé"}</span>
+          <span className="tax-res-val val-cobalt">{netSalary.toLocaleString()} € / mois</span>
+        </div>
+      </div>
+    </div>
   );
 }
 
-function DesktopHorizontal({ t, lang, list, containerRef, isModalOpen, setIsModalOpen, selectedStudy, setSelectedStudy, handleLinkClick }) {
-  const [activeIndex, setActiveIndex] = useState(0);
+// 3. Yobantel Interactive Cross-Border Logistics Workflow Widget
+function YobantelWorkflowWidget({ isEn }) {
+  const [activeStep, setActiveStep] = useState(0);
 
-  // Track vertical scroll progress of the container
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  const panelCount = list.length;
-
-  // Scroll progress (0..1) -> horizontal translation in viewport units.
-  // Magnetic snap: pulls the position toward the nearest whole panel so the
-  // text never sits half-split between two panels, while still following the scroll.
-  const x = useTransform(scrollYProgress, (progress) => {
-    const raw = progress * (panelCount - 1);           // 0..(n-1)
-    const nearest = Math.round(raw);                    // index of closest panel
-    const delta = raw - nearest;                        // -0.5..0.5
-    const snap = nearest + delta * 0.18;                 // magnetic pull
-    return `-${snap * 100}vw`;
-  });
-
-  // Derive the active index from the same logic for the progress dots
-  useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    const nearest = Math.round(progress * (panelCount - 1));
-    setActiveIndex(Math.max(0, Math.min(panelCount - 1, nearest)));
-  });
-
-  const goToSlide = useCallback((i) => {
-    setActiveIndex(i);
-    const progressTarget = panelCount > 1 ? i / (panelCount - 1) : 0;
-    // Scroll the container so that scrollYProgress reaches the target
-    const container = containerRef.current;
-    if (container) {
-      const { height } = container.getBoundingClientRect();
-      const scrollable = height - window.innerHeight;
-      const top = container.offsetTop + scrollable * progressTarget;
-      window.scrollTo({ top, behavior: "smooth" });
-    }
-  }, [containerRef, panelCount]);
+  const steps = isEn ? [
+    { title: "01. Europe Order", desc: "Customer places order for electronics or goods in Europe." },
+    { title: "02. Customs & Tax", desc: "Automated real-time calculation of West African shipping & customs duty." },
+    { title: "03. Mobile Payment", desc: "Instant checkout via Mobile Money (Orange, Wave, Wave Money) or Stripe." },
+    { title: "04. WhatsApp Tracking", desc: "Automated parcel tracking updates sent directly via WhatsApp." }
+  ] : [
+    { title: "01. Commande Europe", desc: "Le client passe commande de matériel ou marchandises en Europe." },
+    { title: "02. Douane & Taxes", desc: "Calcul automatique en temps réel des frais de douane et de transport." },
+    { title: "03. Paiement Mobile", desc: "Règlement instantané par Mobile Money (Orange, Wave, Wave Money) ou Stripe." },
+    { title: "04. Suivi WhatsApp", desc: "Notifications et suivi de livraison automatiques envoyés sur WhatsApp." }
+  ];
 
   return (
-    <div ref={containerRef} className="cs-horizontal-container" id="projects">
-      <div className="cs-sticky-wrapper">
-        {/* Pinned Section Title */}
-        <h2 className="cs-horizontal-title">{t.projectsLabel}</h2>
-
-        {/* Progress indicator + clickable dots */}
-        <div className="cs-progress">
-          {list.map((_, i) => (
-            <button
-              key={i}
-              className={`cs-progress-dot ${i === activeIndex ? "is-active" : ""}`}
-              onClick={() => goToSlide(i)}
-              aria-label={`Aller au projet ${i + 1}`}
-            />
-          ))}
-          <span className="cs-progress-count">
-            {String(activeIndex + 1).padStart(2, "0")} / {String(list.length).padStart(2, "0")}
-          </span>
-        </div>
-
-        {/* Horizontal track: position linked directly to scroll */}
-        <motion.div className="cs-horizontal-track" style={{ x }}>
-          {list.map((item, idx) => (
-            <div
-              key={item.name}
-              className={`cs-horizontal-panel ${item.isFeatured ? "featured-panel-highlight" : ""}`}
-            >
-              <PanelContent item={item} idx={idx} onLinkClick={handleLinkClick} />
-            </div>
-          ))}
-        </motion.div>
+    <div className="yobantel-widget-box">
+      <div className="yobantel-widget-header">
+        <span className="yobantel-tag">YOBANTEL LOGISTICS ENGINE</span>
+        <span className="yobantel-status">✦ {isEn ? "WORKFLOW ACTIVE" : "WORKFLOW ACTIF"}</span>
       </div>
 
-      {/* Case Study Modal (Shared generic modal) */}
+      <div className="yobantel-stepper-list">
+        {steps.map((s, idx) => {
+          const isActive = activeStep === idx;
+          return (
+            <div
+              key={idx}
+              className={`yobantel-step-card ${isActive ? "is-active" : ""}`}
+              onClick={() => setActiveStep(idx)}
+            >
+              <div className="step-card-top">
+                <span className="step-card-title">{s.title}</span>
+                <span className="step-card-indicator">{isActive ? "● ACTIF" : "○"}</span>
+              </div>
+              <p className="step-card-desc">{s.desc}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// Main Component: Re-imagined "Selected Systems" Blueprint Dossiers Stack
+function CaseStudies({ t, lang }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedStudy, setSelectedStudy] = useState("");
+  const isEn = lang === "en";
+
+  const handleOpenModal = (studyKey) => {
+    setSelectedStudy(studyKey);
+    setIsModalOpen(true);
+  };
+
+  return (
+    <section className="case-studies-section" id="projects">
+      <div className="case-studies-header">
+        <p className="cs-header-label">{t.projectsLabel}</p>
+        <Appear as="h2" className="cs-header-title">
+          {isEn ? "Selected Systems & Products" : "Systèmes Conçus & Réalisations"}
+        </Appear>
+        <p className="cs-header-sub">
+          {isEn
+            ? "Every project starts with an operational friction. Here is how technology resolves it."
+            : "Chaque système répond à une friction précise. Découvrez les solutions concrètes en action."}
+        </p>
+      </div>
+
+      {/* Blueprint Dossier Stack */}
+      <div className="dossiers-stack">
+        {/* DOSSIER 01: WHATSAPP AI BOT */}
+        <Appear className="dossier-card featured-dossier">
+          <div className="dossier-grid">
+            <div className="dossier-left-col">
+              <div className="dossier-status-pill">
+                <span className="status-dot"></span>
+                <span>{isEn ? "ACTIVE SYSTEM — AVAILABLE FOR DEPLOYMENT" : "SOLUTION ACTIVE — DISPONIBLE IMMÉDIATEMENT"}</span>
+              </div>
+
+              <span className="dossier-num">01 / BOT PME</span>
+              <h3 className="dossier-title">Assistant IA WhatsApp</h3>
+              <p className="dossier-subtitle">
+                {isEn
+                  ? "How do you handle customer bookings, orders, and inquiries 24/7 without extra staff?"
+                  : "Comment gérer les commandes, rendez-vous et questions clients 24h/24 sans alourdir l'équipe ?"}
+              </p>
+
+              <ul className="dossier-highlights">
+                <li><span className="bullet">✦</span> {isEn ? "Bookings & dynamic FAQ 24/7" : "Prise de rendez-vous & FAQ dynamique 24/7"}</li>
+                <li><span className="bullet">✦</span> {isEn ? "Meta Cloud API & SQLite architecture" : "Architecture Meta Cloud API & SQLite"}</li>
+                <li><span className="bullet">✦</span> {isEn ? "Real-time manager Telegram alerts" : "Alertes Telegram instantanées pour le gérant"}</li>
+              </ul>
+
+              <div className="dossier-tags">
+                <span className="dossier-tag">META CLOUD API</span>
+                <span className="dossier-tag">NODE.JS</span>
+                <span className="dossier-tag">OPENAI</span>
+                <span className="dossier-tag">SQLITE</span>
+              </div>
+
+              <div className="dossier-price-row">
+                <span className="price-label">{isEn ? "Setup & License:" : "Formule d'installation :"}</span>
+                <span className="price-val">500 € setup • 100 €/mois</span>
+              </div>
+
+              <div className="dossier-actions">
+                <button
+                  type="button"
+                  className="dossier-btn-primary"
+                  onClick={() => handleOpenModal("whatsapp-ai")}
+                >
+                  {isEn ? "Deploy Solution →" : "Déployer la solution →"}
+                </button>
+              </div>
+            </div>
+
+            <div className="dossier-right-col">
+              <WhatsAppSimulator isEn={isEn} />
+            </div>
+          </div>
+        </Appear>
+
+        {/* DOSSIER 02: OUTILSBELGES.BE */}
+        <Appear className="dossier-card">
+          <div className="dossier-grid">
+            <div className="dossier-left-col">
+              <div className="dossier-status-pill">
+                <span className="status-dot green"></span>
+                <span>{isEn ? "PUBLIC UTILITY PLATFORM" : "PLATEFORME D'UTILITÉ PUBLIQUE"}</span>
+              </div>
+
+              <span className="dossier-num">02 / OUTILSBELGES.BE</span>
+              <h3 className="dossier-title">OutilsBelges</h3>
+              <p className="dossier-subtitle">
+                {isEn
+                  ? "How do you make complex administrative and tax calculations clear and accessible?"
+                  : "Comment rendre les règles administratives et fiscales belges simples et instantanées ?"}
+              </p>
+
+              <ul className="dossier-highlights">
+                <li><span className="bullet">✦</span> {isEn ? "47+ official tax and salary calculators" : "47+ calculateurs fiscaux et salariaux officiels"}</li>
+                <li><span className="bullet">✦</span> {isEn ? "Bespoke high-performance web platform" : "Plateforme web sur-mesure à haute performance"}</li>
+                <li><span className="bullet">✦</span> {isEn ? "Used daily by Belgian citizens and businesses" : "Utilisé quotidiennement par les citoyens et PME belges"}</li>
+              </ul>
+
+              <div className="dossier-tags">
+                <span className="dossier-tag">REACT</span>
+                <span className="dossier-tag">PYTHON</span>
+                <span className="dossier-tag">TAX ENGINE</span>
+              </div>
+
+              <div className="dossier-actions">
+                <a
+                  href="https://outilsbelges.be"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="dossier-btn-secondary"
+                >
+                  {isEn ? "Visit platform →" : "Visiter la plateforme →"}
+                </a>
+              </div>
+            </div>
+
+            <div className="dossier-right-col">
+              <TaxCalculatorWidget isEn={isEn} />
+            </div>
+          </div>
+        </Appear>
+
+        {/* DOSSIER 03: YOBANTEL */}
+        <Appear className="dossier-card">
+          <div className="dossier-grid">
+            <div className="dossier-left-col">
+              <div className="dossier-status-pill">
+                <span className="status-dot blue"></span>
+                <span>{isEn ? "LOGISTICS CASE STUDY" : "ÉTUDE DE CAS LOGISTIQUE"}</span>
+              </div>
+
+              <span className="dossier-num">03 / YOBANTEL</span>
+              <h3 className="dossier-title">Yobantel</h3>
+              <p className="dossier-subtitle">
+                {isEn
+                  ? "How do you connect European ordering with West African cross-border logistics?"
+                  : "Comment connecter la commande en Europe et la livraison logistique en Afrique de l'Ouest ?"}
+              </p>
+
+              <ul className="dossier-highlights">
+                <li><span className="bullet">✦</span> {isEn ? "Cross-border parcel & customs tax engine" : "Moteur de douane et calcul de frais de livraison"}</li>
+                <li><span className="bullet">✦</span> {isEn ? "Stripe & Mobile Money payments" : "Passerelle de paiement Stripe & Mobile Money"}</li>
+                <li><span className="bullet">✦</span> {isEn ? "Automated WhatsApp status notifications" : "Notifications de suivi automatiques envoyées par WhatsApp"}</li>
+              </ul>
+
+              <div className="dossier-tags">
+                <span className="dossier-tag">NEXT.JS</span>
+                <span className="dossier-tag">MOBILE MONEY</span>
+                <span className="dossier-tag">REST API</span>
+              </div>
+
+              <div className="dossier-actions">
+                <button
+                  type="button"
+                  className="dossier-btn-secondary"
+                  onClick={() => handleOpenModal("yobantel")}
+                >
+                  {isEn ? "Read Case Study →" : "Consulter l'étude de cas →"}
+                </button>
+              </div>
+            </div>
+
+            <div className="dossier-right-col">
+              <YobantelWorkflowWidget isEn={isEn} />
+            </div>
+          </div>
+        </Appear>
+      </div>
+
+      {/* Case Study Modal */}
       <CaseStudyModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -311,7 +363,7 @@ function DesktopHorizontal({ t, lang, list, containerRef, isModalOpen, setIsModa
         studyKey={selectedStudy}
         lang={lang}
       />
-    </div>
+    </section>
   );
 }
 
