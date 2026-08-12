@@ -15,6 +15,7 @@ import OtherWork from "./components/OtherWork";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
+import ChatWidget from "./components/ChatWidget";
 
 function App() {
   const [lang, setLang] = useState("fr");
@@ -54,6 +55,7 @@ function App() {
       </main>
       <Footer t={t} />
       <BackToTop lang={lang} />
+      <ChatWidget lang={lang} />
     </div>
   );
 }
